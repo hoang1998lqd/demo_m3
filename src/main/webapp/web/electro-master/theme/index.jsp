@@ -43,6 +43,41 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .dropbtn-category {
+            background-color: #FFFFFF;
+            color: #2B2D42;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .dropdown-category {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content-category {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content-category a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content-category a:hover {background-color: #ddd;}
+
+        .dropdown-category:hover .dropdown-content-category {display: block;}
+
+        .dropdown-category:hover .dropbtn {background-color: #2B2D42;}
+    </style>
 
 </head>
 <body>
@@ -57,14 +92,19 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
             </ul>
             <ul class="header-links pull-right">
-
+              <c:if test="${sessionScope.customer != null}">
+                  <a href="customer-detail.jsp" class="dropbtn">Xin chào </a>
+              </c:if>
                 <div class="dropdownAccount">
                     <button class="dropbtn">Tài khoản</button>
                     <div class="dropdown-content">
-                        <c:if test="${requestScope.c = null}">
+                        <c:if test="${sessionScope.customer == null}">
                             <a href="login-2.jsp">Đăng nhập</a>
                         </c:if>
-                        <a href="#">Đăng xuất</a>
+                        <c:if test="${sessionScope.customer != null}">
+                            <a href="customer-detail.jsp">Thông tin tài khoản</a>
+                            <a href="<c:url value="/web/electro-master/theme/logout"/>">Đăng xuất</a>
+                        </c:if>
                     </div>
                 </div>
             </ul>
@@ -190,7 +230,16 @@
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#">Hot Deals</a></li>
-                <li><a href="#">Categories</a></li>
+                <li>
+                    <div class="dropdown-category">
+                        <button class="dropbtn-category">Categories</button>
+                        <div class="dropdown-content-category">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                </li>
                 <li><a href="#">Laptops</a></li>
                 <li><a href="#">Smartphones</a></li>
                 <li><a href="#">Cameras</a></li>

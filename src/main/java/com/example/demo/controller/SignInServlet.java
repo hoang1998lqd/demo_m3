@@ -20,7 +20,6 @@ public class SignInServlet extends HttpServlet {
         }
         return 0;
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action =  request.getParameter("action");
@@ -33,28 +32,25 @@ public class SignInServlet extends HttpServlet {
         }
 
     }
-
     private void signIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String message = "Sign in";
         CustomerService customerService = new CustomerService();
         ArrayList<Customer> customers = customerService.findAll();
         String userName = request.getParameter("Username");
         String password = request.getParameter("Password");
-
         if (checkLogin(userName,password,customers) == 1){
-//            response.sendRedirect("/web/electro-master/theme/product.jsp");
             Customer customer = customerService.findCustomerByAccount(userName,customers);
-            request.setAttribute("c",customer);
-            request.setAttribute("messageSignIn",message);
+            HttpSession session = request.getSession();
+            session.setAttribute("customer",customer);
+            session.setAttribute("messageSignIn",message);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/index.jsp");
             requestDispatcher.forward(request,response);
         } else if (checkLogin(userName,password,customers) == 2) {
+            HttpSession session = request.getSession();
             Customer customer = customerService.findCustomerByAccount(userName,customers);
-            request.setAttribute("c",customer);
-            request.setAttribute("messageSignIn",message);
-            //response.sendRedirect("/web/electro-master/theme/product.jsp");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/index.jsp");
-            requestDispatcher.forward(request,response);
+            session.setAttribute("customer",customer);
+            session.setAttribute("messageSignIn",message);
+            response.sendRedirect("/web/electro-master/theme/index.jsp");
         }else {
             request.setAttribute("mess","Tài khoản hoặc mật khẩu không chính xác !!!");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
@@ -113,8 +109,8 @@ public class SignInServlet extends HttpServlet {
                 req.setAttribute("Email",email);
                 check = false;
             }
+            req.setAttribute("messageSignUp",message);
             if (check){
-                req.setAttribute("messageSignUp",message);
                 customerService.create(customer);
                 resp.sendRedirect("/web/electro-master/theme/index.jsp ");
             }else {
@@ -122,13 +118,6 @@ public class SignInServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
                 requestDispatcher.forward(req,resp);
             }
-//            else {
-//                req.setAttribute("messageSignUp",message);
-//                Customer customer = new Customer(userName,password,name,phone,email,address);
-//                customerService.create(customer);
-//                resp.sendRedirect("/web/electro-master/theme/index.jsp ");
-//            }
-
         }
 
     }
