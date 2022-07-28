@@ -92,4 +92,16 @@ public class CustomerService implements ICRUD<Customer> {
         return 0;
     }
 
+    // Tìm tài khoản để hiển thị thông qua Account
+
+    public Customer findCustomerByAccount(String account, ArrayList<Customer> customers){
+        for (Customer customer : customers){
+            if (customer.getAccount().equals(account) || customer.getEmail().equals(account)){
+                return customer;
+            }
+        }
+        return null;
+    }
+
+
 }

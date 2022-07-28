@@ -40,12 +40,17 @@ public class SignInServlet extends HttpServlet {
         ArrayList<Customer> customers = customerService.findAll();
         String userName = request.getParameter("Username");
         String password = request.getParameter("Password");
+
         if (checkLogin(userName,password,customers) == 1){
 //            response.sendRedirect("/web/electro-master/theme/product.jsp");
+            Customer customer = customerService.findCustomerByAccount(userName,customers);
+            request.setAttribute("c",customer);
             request.setAttribute("messageSignIn",message);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/product.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/index.jsp");
             requestDispatcher.forward(request,response);
         } else if (checkLogin(userName,password,customers) == 2) {
+            Customer customer = customerService.findCustomerByAccount(userName,customers);
+            request.setAttribute("c",customer);
             request.setAttribute("messageSignIn",message);
             //response.sendRedirect("/web/electro-master/theme/product.jsp");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/index.jsp");
