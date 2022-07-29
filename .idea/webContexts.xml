@@ -3,6 +3,7 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/web/electro-master/theme/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/web/electro-master/theme" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/web/electro-master/theme/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/web/electro-master/theme" />
       </map>
     </option>

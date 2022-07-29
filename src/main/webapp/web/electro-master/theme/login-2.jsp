@@ -12,7 +12,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cửa hàng điện tử</title>
+    <link rel='shortcut icon' href='/web/electro-master/img/favicon.ico' />
+    <title>Electronic Store</title>
     <style>
         body{
             margin:0;

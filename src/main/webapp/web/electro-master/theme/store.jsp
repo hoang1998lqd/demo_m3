@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Regalite
@@ -14,7 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Electro - HTML Ecommerce Template</title>
+    <link rel='shortcut icon' href='/web/electro-master/img/favicon.ico' />
+    <title>Electronic Store</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -41,6 +43,45 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .product .add-to-cart .add-to-cart-btn{
+            height: 45px;
+        }
+        .dropbtn {
+            background-color: #1E1F29;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .dropdownAccount {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #D10024;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdownAccount:hover .dropdown-content {display: block;}
+
+        .dropdownAccount:hover .dropbtn {background-color: #1E1F29;}
+    </style>
 
 </head>
 <body>
@@ -55,8 +96,22 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+
+                <c:if test="${sessionScope.customer != null}">
+                    <a href="customer-detail.jsp" class="dropbtn">Xin chào ${sessionScope.customer.getName()} </a>
+                </c:if>
+                <div class="dropdownAccount">
+                    <button class="dropbtn">Tài khoản</button>
+                    <div class="dropdown-content">
+                        <c:if test="${sessionScope.customer == null}">
+                            <a href="login-2.jsp">Đăng nhập</a>
+                        </c:if>
+                        <c:if test="${sessionScope.customer != null}">
+                            <a href="customer-detail.jsp">Thông tin tài khoản</a>
+                            <a href="<c:url value="/web/electro-master/theme/logout"/>">Đăng xuất</a>
+                        </c:if>
+                    </div>
+                </div>
             </ul>
         </div>
     </div>
@@ -71,7 +126,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="#" class="logo">
+                        <a href="index.jsp" class="logo">
                             <img src="../img/logo.png" alt="">
                         </a>
                     </div>
@@ -83,11 +138,13 @@
                     <div class="header-search">
                         <form>
                             <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
+                                <option value="0">Danh mục</option>
+                                <option value="1">Laptop</option>
+                                <option value="2">Điện thoại</option>
+                                <option value="2">Máy ảnh</option>
+                                <option value="2">Phụ kiện</option>
                             </select>
-                            <input class="input" placeholder="Search here">
+                            <input class="input" placeholder="Tìm kiếm">
                             <button class="search-btn">Search</button>
                         </form>
                     </div>
@@ -98,20 +155,20 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
-                            <a href="#">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
-                                <div class="qty">2</div>
-                            </a>
-                        </div>
+<%--                        <div>--%>
+<%--                            <a href="#">--%>
+<%--                                <i class="fa fa-heart-o"></i>--%>
+<%--                                <span>Your Wishlist</span>--%>
+<%--                                <div class="qty">2</div>--%>
+<%--                            </a>--%>
+<%--                        </div>--%>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Giỏ hàng</span>
                                 <div class="qty">3</div>
                             </a>
                             <div class="cart-dropdown">
@@ -143,8 +200,8 @@
                                     <h5>SUBTOTAL: $2940.00</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="#">View Cart</a>
-                                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="#">Giỏ hàng</a>
+                                    <a href="#">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -178,13 +235,14 @@
         <div id="responsive-nav">
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Hot Deals</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Smartphones</a></li>
-                <li><a href="#">Cameras</a></li>
-                <li><a href="#">Accessories</a></li>
+                <li class="active"><a href="index.jsp">Trang chủ</a></li>
+                <li><a href="product.jsp">Hot Deals</a></li>
+
+                <li><a href="store.jsp">Sản phẩm</a></li>
+                <li><a href="laptop.jsp">Máy tính</a></li>
+                <li><a href="smart-phone.jsp">Điện thoại</a></li>
+                <li><a href="camera.jsp">Máy ảnh</a></li>
+                <li><a href="accessories.jsp">Phụ kiện</a></li>
             </ul>
             <!-- /NAV -->
         </div>
@@ -197,20 +255,20 @@
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="breadcrumb-tree">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">All Categories</a></li>
-                    <li><a href="#">Accessories</a></li>
-                    <li class="active">Headphones (227,490 Results)</li>
-                </ul>
-            </div>
-        </div>
-        <!-- /row -->
-    </div>
+<%--    <div class="container">--%>
+<%--        <!-- row -->--%>
+<%--        <div class="row">--%>
+<%--            <div class="col-md-12">--%>
+<%--                <ul class="breadcrumb-tree">--%>
+<%--                    <li><a href="#">Home</a></li>--%>
+<%--                    <li><a href="#">All Categories</a></li>--%>
+<%--                    <li><a href="#">Phụ kiện</a></li>--%>
+<%--                    <li class="active">Headphones (227,490 Results)</li>--%>
+<%--                </ul>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <!-- /row -->--%>
+<%--    </div>--%>
     <!-- /container -->
 </div>
 <!-- /BREADCRUMB -->
@@ -232,7 +290,7 @@
                             <input type="checkbox" id="category-1">
                             <label for="category-1">
                                 <span></span>
-                                Laptops
+                                Máy tính
                                 <small>(120)</small>
                             </label>
                         </div>
@@ -241,7 +299,7 @@
                             <input type="checkbox" id="category-2">
                             <label for="category-2">
                                 <span></span>
-                                Smartphones
+                                Điện thoại
                                 <small>(740)</small>
                             </label>
                         </div>
@@ -250,7 +308,7 @@
                             <input type="checkbox" id="category-3">
                             <label for="category-3">
                                 <span></span>
-                                Cameras
+                                Máy ảnh
                                 <small>(1450)</small>
                             </label>
                         </div>
@@ -259,35 +317,35 @@
                             <input type="checkbox" id="category-4">
                             <label for="category-4">
                                 <span></span>
-                                Accessories
+                                Phụ kiện
                                 <small>(578)</small>
                             </label>
                         </div>
 
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="category-5">
-                            <label for="category-5">
-                                <span></span>
-                                Laptops
-                                <small>(120)</small>
-                            </label>
-                        </div>
+<%--                        <div class="input-checkbox">--%>
+<%--                            <input type="checkbox" id="category-5">--%>
+<%--                            <label for="category-5">--%>
+<%--                                <span></span>--%>
+<%--                                Máy tính--%>
+<%--                                <small>(120)</small>--%>
+<%--                            </label>--%>
+<%--                        </div>--%>
 
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="category-6">
-                            <label for="category-6">
-                                <span></span>
-                                Smartphones
-                                <small>(740)</small>
-                            </label>
-                        </div>
+<%--                        <div class="input-checkbox">--%>
+<%--                            <input type="checkbox" id="category-6">--%>
+<%--                            <label for="category-6">--%>
+<%--                                <span></span>--%>
+<%--                                Điện thoại--%>
+<%--                                <small>(740)</small>--%>
+<%--                            </label>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
                 <!-- /aside Widget -->
 
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Price</h3>
+                    <h3 class="aside-title">Giá</h3>
                     <div class="price-filter">
                         <div id="price-slider"></div>
                         <div class="input-number price-min">
@@ -307,7 +365,7 @@
 
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Brand</h3>
+                    <h3 class="aside-title">Thương hiệu</h3>
                     <div class="checkbox-filter">
                         <div class="input-checkbox">
                             <input type="checkbox" id="brand-1">
@@ -363,7 +421,7 @@
 
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Top selling</h3>
+                    <h3 class="aside-title">Top bán chạy</h3>
                     <div class="product-widget">
                         <div class="product-img">
                             <img src="../img/product01.png" alt="">
@@ -445,21 +503,21 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -478,21 +536,21 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star-o"></i>--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -510,16 +568,16 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -537,16 +595,16 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -564,16 +622,16 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -589,21 +647,21 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star-o"></i>--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -621,21 +679,21 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                    <i class="fa fa-star"></i>--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -651,16 +709,16 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -678,16 +736,16 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                <div class="product-rating">
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                </div>
+<%--                                <div class="product-rating">--%>
+<%--                                </div>--%>
+<%--                                <div class="product-btns">--%>
+<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
+<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
+<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
+<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -724,7 +782,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="newsletter">
-                    <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+                    <p>Đăng ký để nhận <strong>Thông tin mới nhất</strong></p>
                     <form>
                         <input class="input" type="email" placeholder="Enter Your Email">
                         <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
@@ -762,7 +820,7 @@
             <div class="row">
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">About Us</h3>
+                        <h3 class="footer-title">Giới thiệu</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
@@ -774,13 +832,13 @@
 
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">Categories</h3>
+                        <h3 class="footer-title">Danh mục</h3>
                         <ul class="footer-links">
                             <li><a href="#">Hot deals</a></li>
-                            <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Smartphones</a></li>
-                            <li><a href="#">Cameras</a></li>
-                            <li><a href="#">Accessories</a></li>
+                            <li><a href="laptop.jsp">Máy tính</a></li>
+                            <li><a href="smart-phone.jsp">Điện thoại</a></li>
+                            <li><a href="camera.jsp">Máy ảnh</a></li>
+                            <li><a href="accessories.jsp">Phụ kiện</a></li>
                         </ul>
                     </div>
                 </div>
@@ -789,26 +847,34 @@
 
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">Information</h3>
+                        <h3 class="footer-title">Thông tin</h3>
                         <ul class="footer-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Orders and Returns</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Giới thiệu</a></li>
+                            <li><a href="#">Kết nối</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <%--                            <li><a href="#">Orders and Returns</a></li>--%>
+                            <li><a href="#">Điều khoản</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">Service</h3>
+                        <h3 class="footer-title">Dịch vụ</h3>
                         <ul class="footer-links">
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
+                            <%--                            <li><a href="#">My Account</a></li>--%>
+                            <%--                            <div class="dropdownAccount">--%>
+                            <%--                                <button class="dropbtn">Tên người dùng hoặc Admin (Phần xử lý back)</button>--%>
+                            <%--                                <div class="dropdown-content">--%>
+                            <%--                                    <a href="customer-detail.jsp">Tài khoản của tôi</a>--%>
+                            <%--                                    <a href="#">Lịch sử mua hàng</a>--%>
+                            <%--                                    <a href="#">Đăng xuất</a>--%>
+                            <%--                                </div>--%>
+                            <%--                            </div>--%>
+                            <li><a href="#">Giỏ hàng</a></li>
+                            <%--                            <li><a href="#">Wishlist</a></li>--%>
+                            <%--                            <li><a href="#">Track My Order</a></li>--%>
+                            <li><a href="#">Hỗ trợ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -824,18 +890,20 @@
         <div class="container">
             <!-- row -->
             <div class="row">
+
                 <div class="col-md-12 text-center">
+                    <h3 class="footer-title" style="color: #FFFFFF">Hình thức thanh toán</h3>
                     <ul class="footer-payments">
-                        <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-                        <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-visa"></i></a></li>
+                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-credit-card"></i></a></li>
+                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-paypal"></i></a></li>
+                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-mastercard"></i></a></li>
+                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-discover"></i></a></li>
+                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-amex"></i></a></li>
                     </ul>
                     <span class="copyright">
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Store is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" style="color: #B9BABC">C0422H1</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							</span>
                 </div>
