@@ -9,12 +9,13 @@ public class Product {
     private int amount;
     private String status;
     private  int discount;
+    private Category category;
 
     public Product() {
     }
 
     public Product(int id, String name, int price,
-                   String description, String img, int amount, String status, int discount) {
+                   String description, String img, int amount, String status, int discount,Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -23,6 +24,15 @@ public class Product {
         this.amount = amount;
         this.status = status;
         this.discount = discount;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -33,9 +43,10 @@ public class Product {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", img='" + img + '\'' +
-                ", amount='" + amount + '\'' +
+                ", amount=" + amount +
                 ", status='" + status + '\'' +
                 ", discount=" + discount +
+                ", category=" + category +
                 '}';
     }
 

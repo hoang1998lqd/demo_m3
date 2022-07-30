@@ -15,7 +15,7 @@ public class LogoutServlet extends HttpServlet {
         resp.setContentType("txt/html;charset=UTF-8");
         HttpSession session = req.getSession();
         session.removeAttribute("customer");
-        resp.sendRedirect("/web/electro-master/theme/index.jsp");
+        resp.sendRedirect("/web/electro-master/theme/home");
     }
 }
 

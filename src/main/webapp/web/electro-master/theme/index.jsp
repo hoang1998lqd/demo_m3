@@ -3033,7 +3033,7 @@ Table OF Contents
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="index.jsp" class="logo">
+                        <a href="/web/electro-master/theme/home" class="logo">
                             <img src="../img/logo.png" alt="">
                         </a>
                     </div>
@@ -3142,7 +3142,7 @@ Table OF Contents
         <div id="responsive-nav">
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="index.jsp">Trang chủ</a></li>
+                <li class="active"><a href="/web/electro-master/theme/home">Trang chủ</a></li>
                 <li><a href="product.jsp">Hot Deals</a></li>
 <%--                <li>--%>
 <%--                    <div class="dropdown-category">--%>
@@ -3155,7 +3155,7 @@ Table OF Contents
 <%--                        </div>--%>
 <%--                    </div>--%>
 <%--                </li>--%>
-                <li><a href="store.jsp" >Sản phẩm</a></li>
+                <li><a href="/web/electro-master/theme/store" >Sản phẩm</a></li>
                 <li><a href="laptop.jsp">Máy tính</a></li>
                 <li><a href="smart-phone.jsp">Điện thoại</a></li>
                 <li><a href="camera.jsp">Máy ảnh</a></li>

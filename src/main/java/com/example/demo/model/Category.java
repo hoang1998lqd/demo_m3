@@ -1,24 +1,19 @@
 package com.example.demo.model;
 
-public class Brand {
-        private int id;
-        private String name;
+public class Category {
+    private int id;
+    private String name;
 
-    public Brand() {
+    public Category() {
     }
 
-    public Brand(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Brand(String name) {
+    public Category(String name) {
         this.name = name;
     }
 
     @Override
     public String toString() {
-        return "Brand{" +
+        return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -37,6 +32,11 @@ public class Brand {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public Category(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 }
