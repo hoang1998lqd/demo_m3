@@ -43,14 +43,14 @@ public class SignInServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("customer",customer);
             session.setAttribute("messageSignIn",message);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/index.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/home");
             requestDispatcher.forward(request,response);
         } else if (checkLogin(userName,password,customers) == 2) {
             HttpSession session = request.getSession();
             Customer customer = customerService.findCustomerByAccount(userName,customers);
             session.setAttribute("customer",customer);
             session.setAttribute("messageSignIn",message);
-            response.sendRedirect("/web/electro-master/theme/index.jsp");
+            response.sendRedirect("/web/electro-master/theme/home");
         }else {
             request.setAttribute("mess","Tài khoản hoặc mật khẩu không chính xác !!!");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");

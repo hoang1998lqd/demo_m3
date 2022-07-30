@@ -213,7 +213,7 @@
                                 </div>
                             </div>
                         </form>
-                               <c:if test="${messageSignUp != null}">
+                               <c:if test="${messageSignUp = null}">
                                 <form action="<c:url value="/web/electro-master/theme/login?action=sign-up"/>" method="post"  style="display: none">
                                     </c:if>
                         <form action="<c:url value="/web/electro-master/theme/login?action=sign-up"/>" method="post" >

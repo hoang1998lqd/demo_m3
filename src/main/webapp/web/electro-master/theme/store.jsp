@@ -65,7 +65,7 @@
             position: absolute;
             background-color: #f1f1f1;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
             z-index: 1;
         }
 
@@ -137,14 +137,16 @@
                 <div class="col-md-6">
                     <div class="header-search">
                         <form>
-                            <select class="input-select">
-                                <option value="0">Danh mục</option>
-                                <option value="1">Laptop</option>
-                                <option value="2">Điện thoại</option>
-                                <option value="2">Máy ảnh</option>
-                                <option value="2">Phụ kiện</option>
-                            </select>
-                            <input class="input" placeholder="Tìm kiếm">
+                            <label>
+                                <select class="input-select">
+                                    <option value="0">Danh mục</option>
+                                    <option value="1">Laptop</option>
+                                    <option value="2">Điện thoại</option>
+                                    <option value="2">Máy ảnh</option>
+                                    <option value="2">Phụ kiện</option>
+                                </select>
+                            </label>
+                                <input class="input" placeholder="Tìm kiếm">
                             <button class="search-btn">Search</button>
                         </form>
                     </div>
@@ -349,13 +351,13 @@
                     <div class="price-filter">
                         <div id="price-slider"></div>
                         <div class="input-number price-min">
-                            <input id="price-min" type="number">
+                            <label for="price-min"></label><input id="price-min" type="number">
                             <span class="qty-up">+</span>
                             <span class="qty-down">-</span>
                         </div>
                         <span>-</span>
                         <div class="input-number price-max">
-                            <input id="price-max" type="number">
+                            <label for="price-max"></label><input id="price-max" type="number">
                             <span class="qty-up">+</span>
                             <span class="qty-down">-</span>
                         </div>
@@ -503,18 +505,7 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-<%--                                <div class="product-rating">--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                </div>--%>
-<%--                                <div class="product-btns">--%>
-<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
-<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
-<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
-<%--                                </div>--%>
+
                             </div>
                             <div class="add-to-cart">
                                 <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
@@ -523,40 +514,53 @@
                     </div>
                     <!-- /product -->
 
-                    <!-- product -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="product">
-                            <div class="product-img">
-                                <img src="../img/product02.png" alt="">
-                                <div class="product-label">
-                                    <span class="new">NEW</span>
+<%--                    <!-- product -->--%>
+<%--                    <div class="col-md-4 col-xs-6">--%>
+<%--                        <div class="product">--%>
+<%--                            <div class="product-img">--%>
+<%--                                <img src="../img/product02.png" alt="">--%>
+<%--                                <div class="product-label">--%>
+<%--                                    <span class="new">NEW</span>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="product-body">--%>
+<%--                                <p class="product-category">Category</p>--%>
+<%--                                <h3 class="product-name"><a href="#">product name goes here</a></h3>--%>
+<%--                                <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>--%>
+<%--                            </div>--%>
+<%--                            <div class="add-to-cart">--%>
+<%--                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <!-- /product -->--%>
+
+<%--                    <div class="clearfix visible-sm visible-xs"></div>--%>
+
+                    <c:forEach items="${products}" var="p">
+                        <!-- product -->
+                        <div class="col-md-4 col-xs-6">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="${p.getImg()}"  style="height: 600px; width: 600px" alt="">
+                                    <div class="product-label">
+                                        <span class="new">NEW</span>
+                                    </div>
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">${p.getName()}</a></h3>
+                                    <h4 class="product-price">${p.getPrice()} <del class="product-old-price"><${p.getPrice() - p.getPrice()* p.getDiscount()/100 }/del></h4>
+                                </div>
+                                <div class="add-to-cart">
+                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                                 </div>
                             </div>
-                            <div class="product-body">
-                                <p class="product-category">Category</p>
-                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-<%--                                <div class="product-rating">--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star"></i>--%>
-<%--                                    <i class="fa fa-star-o"></i>--%>
-<%--                                </div>--%>
-<%--                                <div class="product-btns">--%>
-<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
-<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
-<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
-<%--                                </div>--%>
-                            </div>
-                            <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                            </div>
                         </div>
-                    </div>
-                    <!-- /product -->
+                        <!-- /product -->
+                        <div class="clearfix visible-sm visible-xs"></div>
+                    </c:forEach>
 
-                    <div class="clearfix visible-sm visible-xs"></div>
 
                     <!-- product -->
                     <div class="col-md-4 col-xs-6">
@@ -736,13 +740,6 @@
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">product name goes here</a></h3>
                                 <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-<%--                                <div class="product-rating">--%>
-<%--                                </div>--%>
-<%--                                <div class="product-btns">--%>
-<%--                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>--%>
-<%--                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>--%>
-<%--                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>--%>
-<%--                                </div>--%>
                             </div>
                             <div class="add-to-cart">
                                 <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
@@ -784,7 +781,9 @@
                 <div class="newsletter">
                     <p>Đăng ký để nhận <strong>Thông tin mới nhất</strong></p>
                     <form>
-                        <input class="input" type="email" placeholder="Enter Your Email">
+                        <label>
+                            <input class="input" type="email" placeholder="Enter Your Email">
+                        </label>
                         <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
                     </form>
                     <ul class="newsletter-follow">
