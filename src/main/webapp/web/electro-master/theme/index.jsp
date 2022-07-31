@@ -3236,10 +3236,12 @@ Table OF Contents
                     <h3 class="title">Sản phẩm mới</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a data-toggle="tab" href="#tab1">Máy tính</a></li>
-                            <li><a data-toggle="tab" href="#tab1">Điện thoại</a></li>
-                            <li><a data-toggle="tab" href="#tab1">Máy ảnh</a></li>
-                            <li><a data-toggle="tab" href="#tab1">Phụ kiện</a></li>
+                            <c:forEach items="${categories}" var="c">
+                            <li class="active"><a data-toggle="tab" href="categoryHome?id=${c.getId()}">${c.getName()}</a></li>
+<%--                            <li><a data-toggle="tab" href="#tab1">Điện thoại</a></li>--%>
+<%--                            <li><a data-toggle="tab" href="#tab1">Máy ảnh</a></li>--%>
+<%--                            <li><a data-toggle="tab" href="#tab1">Phụ kiện</a></li>--%>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
@@ -3259,14 +3261,19 @@ Table OF Contents
                                     <div class="product-img">
                                         <img src="${p.getImg()}"  alt="">
                                         <div class="product-label">
-                                            <span class="sale">-30%</span>
-                                            <span class="new">NEW</span>
+                                            <c:if test="${p.getDiscount() == 0}">
+                                                <span class="new">NEW</span>
+                                            </c:if>
+                                            <c:if test="${p.getDiscount() != 0}">
+                                                <span class="sale">${p.getDiscount()}%</span>
+                                                <span class="new">NEW</span>
+                                            </c:if>
                                         </div>
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
                                         <h3 class="product-name"><a href="#">${p.getName()}</a></h3>
-                                        <h4 class="product-price">${p.getPrice()}<del class="product-old-price">${p.getPrice() - p.getPrice()* p.getDiscount()/100 }</del></h4>
+                                        <h4 class="product-price">${p.getPrice() - p.getPrice() * p.getDiscount()/100 } <del class="product-old-price">${p.getPrice()}</del></h4>
                                     </div>
                                     <div class="add-to-cart">
                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
@@ -3461,10 +3468,9 @@ Table OF Contents
                     <h3 class="title">Top bán chạy</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a data-toggle="tab" href="#tab2">Máy tính</a></li>
-                            <li><a data-toggle="tab" href="#tab2">Điện thoại</a></li>
-                            <li><a data-toggle="tab" href="#tab2">Máy ảnh</a></li>
-                            <li><a data-toggle="tab" href="#tab2">Phụ kiện</a></li>
+                            <c:forEach items="${categories}" var="c">
+                            <li ><a data-toggle="tab" href="category?id=${c.getId()}">${c.getName()}</a></li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>

@@ -3149,12 +3149,14 @@ Table OF Contents
                     <div class="checkbox-filter">
 
 
+
                         <c:forEach items="${categories}" var="c">
                             <div class="input-checkbox">
                                 <input type="checkbox" id="category-${c.getId()}">
                                 <label for="category-${c.getId()}">
                                     <span></span>
-                                        ${c.getName()}
+                                    <a href="category?id=${c.getId()}" >${c.getName()}</a>
+
                                         <%--<small>(120)</small>--%>
                                 </label>
                             </div>
@@ -3247,10 +3249,10 @@ Table OF Contents
                 <div class="store-filter clearfix">
                     <div class="store-sort">
                         <label>
-                            Sort By:
+                            Sắp xếp:
                             <select class="input-select">
-                                <option value="0">Popular</option>
-                                <option value="1">Position</option>
+                                <option value="0">Tăng dần</option>
+                                <option value="1">Giảm dần</option>
                             </select>
                         </label>
 

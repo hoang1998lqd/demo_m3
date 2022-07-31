@@ -1,53 +1,44 @@
 package com.example.demo.model;
 
+
 public class Product {
     private int id;
-    private  String name;
-    private  int price;
+    private String name;
+    private int price;
     private String description;
     private String img;
     private int amount;
-    private String status;
-    private  int discount;
     private Category category;
+    private int status;
+    private int discount;
+    private Brand brand;
 
     public Product() {
     }
 
-    public Product(int id, String name, int price,
-                   String description, String img, int amount, String status, int discount,Category category) {
+    public Product(int id, String name, int price, String description, String img,
+                   int amount, Category category, int status, int discount, Brand brand) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.img = img;
         this.amount = amount;
+        this.category = category;
         this.status = status;
         this.discount = discount;
+        this.brand = brand;
+    }
+
+    public Product(String name, int price, String description, String img, int amount, Category category, int discount, Brand brand) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.img = img;
+        this.amount = amount;
         this.category = category;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                ", img='" + img + '\'' +
-                ", amount=" + amount +
-                ", status='" + status + '\'' +
-                ", discount=" + discount +
-                ", category=" + category +
-                '}';
+        this.discount = discount;
+        this.brand = brand;
     }
 
     public int getId() {
@@ -98,11 +89,19 @@ public class Product {
         this.amount = amount;
     }
 
-    public String getStatus() {
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -112,5 +111,13 @@ public class Product {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

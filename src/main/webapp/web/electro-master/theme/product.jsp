@@ -323,16 +323,8 @@
             <div class="col-md-5">
                 <div class="product-details">
                     <h2 class="product-name">product name goes here</h2>
-<%--                    <div>--%>
-<%--                        <div class="product-rating">--%>
-<%--                            <i class="fa fa-star"></i>--%>
-<%--                            <i class="fa fa-star"></i>--%>
-<%--                            <i class="fa fa-star"></i>--%>
-<%--                            <i class="fa fa-star"></i>--%>
-<%--                            <i class="fa fa-star-o"></i>--%>
-<%--                        </div>--%>
-<%--                        <a class="review-link" href="#">10 Review(s) | Add your review</a>--%>
-<%--                    </div>--%>
+
+<%--                    Lấy dữ liệu product theo id--%>
                     <div>
                         <h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
                         <span class="product-available">Còn hàng</span>
