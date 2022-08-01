@@ -3,6 +3,7 @@ package com.example.demo.DAO;
 import com.example.demo.connection.connectMySQL;
 import com.example.demo.model.Cart;
 import com.example.demo.model.Customer;
+import com.example.demo.model.Item;
 import com.example.demo.model.Order;
 import com.example.demo.service.CustomerService;
 
@@ -20,10 +21,15 @@ public class OrderRepository {
     private final String SELECT_ALL_ORDERS = "select * from orders";
     private final String INSERT_ORDERS = "insert into orders(customer_id, date_order, date_ship, address, status, note)" +
             "value(?,?,?,?,?,?)";
+
+    private final String INSERT_ORDERS_NOT_NOTE = "insert into orders(customer_id, date_order, date_ship, address, status)" +
+            "value(?,?,?,?,?)";
     private final String UPDATE_ORDERS = "update orders set date_ship = ?, address = ?, status = ? , note = ?" + " where id = ?";
     private final String DELETE_ORDERS_BY_ID = "delete from orders where id = ?";
 
     private final String SELECT_ORDER_LAST = "select id from orders where id = (select max(id)from orders)";
+
+    private final String INSERT_ORDER_DETAIL = "INSERT INTO order_detail VALUES (?,?,?)";
 
     private final CustomerService customerService = new CustomerService();
     private Order getOrders(int id, ResultSet resultSet) throws SQLException {
@@ -111,13 +117,35 @@ public class OrderRepository {
     }
 
     // Lấy ra thông tin Order vừa mới được tạo
+    // Ngay khi vừa tạo và thêm (Click vào đặt hàng thì) Order vào database thì mình sẽ lấy luôn ID đó vào
+    // trong order detail.
     public void addOrder(Customer customer, Cart cart){
         LocalDate date = LocalDate.now();
         Date date_order = Date.valueOf(date);
         try{
             connection = connectMySQL.getConnection();
+            statement = connection.prepareStatement(INSERT_ORDERS_NOT_NOTE);
+            statement.setInt(1,customer.getId());
+            statement.setDate(2,date_order);
+            statement.setDate(3,date_order);
+            statement.setString(4,customer.getAddress());
+            statement.setInt(5,0);
+            int total_price = cart.getTotalMoney();
+            statement.executeUpdate();
             statement = connection.prepareStatement(SELECT_ORDER_LAST);
-            
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int order_id = resultSet.getInt(1);
+
+                for (Item item : cart.getItems()) {
+                    statement = connection.prepareStatement(INSERT_ORDER_DETAIL);
+                    statement.setInt(1, order_id);
+                    statement.setInt(2,item.getProduct().getId());
+                    statement.setInt(3,item.getQuantity());
+                    statement.executeUpdate();
+                }
+            }
+
         }catch (SQLException e){
             e.printStackTrace();
         }

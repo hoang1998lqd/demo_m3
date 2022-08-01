@@ -3027,35 +3027,28 @@ Table OF Contents
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
+                        <c:set var="size" value = "${sessionScope.size}"/>
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+                                <div class="qty">${size}</div>
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
+                                    <c:forEach items="${cart.getItems()}" var="item">
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="../img/product01.png" alt="">
+                                            <img src="${item.getProduct().getImg()}" alt="">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                                            <h3 class="product-name"><a href="#">${item.getProduct().getName()}</a></h3>
+                                            <h4 class="product-price"><span class="qty">1x</span>${item.getProduct().getPrice()}</h4>
                                         </div>
                                         <button class="delete"><i class="fa fa-close"></i></button>
                                     </div>
+                                    </c:forEach>
 
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="../img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
                                 </div>
                                 <div class="cart-summary">
                                     <small>3 Item(s) selected</small>
@@ -3292,9 +3285,12 @@ Table OF Contents
                                     <h3 class="product-name"><a href="cart/product?Pid=${p.getId()}">${p.getName()}</a></h3>
                                     <h4 class="product-price">${p.getPrice() - p.getPrice() * p.getDiscount()/100 } <del class="product-old-price">${p.getPrice()}</del></h4>
                                 </div>
-                                <div class="add-to-cart">
-                                    <button class="add-to-cart-btn"><a class="fa fa-shopping-cart" href="cart/product?Pid=${p.getId()}"> Thêm vào giỏ hàng</a></button>
-                                </div>
+                                <form action="/web/electro-master/theme/cart?Pid=${p.getId()}" method="post">
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart" ></i> Thêm vào giỏ hàng</button>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                         <!-- /product -->

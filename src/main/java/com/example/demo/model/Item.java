@@ -10,7 +10,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(int id, Product product, int quantity, int price) {
+    public Item(Product product, int quantity, int price) {
         this.id = ID_ITEM++;
         this.product = product;
         this.quantity = quantity;
