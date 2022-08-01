@@ -70,24 +70,14 @@ public class CartServlet extends HttpServlet {
             ArrayList<Item> items = cart.getItems();
             session.setAttribute("cart",cart);
             session.setAttribute("size",items.size());
-        ArrayList<Product>  products = productService.findAll();
-        ArrayList<Brand>  brands = brandService.findAll();
-        ArrayList<Category>  categories = categoryService.findAll();
-        req.setAttribute("categories",categories);
-        req.setAttribute("products",products);
-        req.setAttribute("brands",brands);
+            ArrayList<Product>  products = productService.findAll();
+            ArrayList<Brand>  brands = brandService.findAll();
+            ArrayList<Category>  categories = categoryService.findAll();
+            req.setAttribute("categories",categories);
+            req.setAttribute("products",products);
+            req.setAttribute("brands",brands);
             req.getRequestDispatcher("/web/electro-master/theme/store.jsp").forward(req,resp);
     }
 
 
-    private void displayAllProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Product>  products = productService.findAll();
-        ArrayList<Brand>  brands = brandService.findAll();
-        ArrayList<Category>  categories = categoryService.findAll();
-        req.setAttribute("categories",categories);
-        req.setAttribute("products",products);
-        req.setAttribute("brands",brands);
-        req.getRequestDispatcher("/web/electro-master/theme/store.jsp").forward(req,resp);
-
-    }
 }

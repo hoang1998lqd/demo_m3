@@ -3043,7 +3043,7 @@ Table OF Contents
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">${item.getProduct().getName()}</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>${item.getProduct().getPrice()}</h4>
+                                            <h4 class="product-price"><span class="qty">${item.getQuantity()}x</span>${item.getProduct().getPrice()}</h4>
                                         </div>
                                         <button class="delete"><i class="fa fa-close"></i></button>
                                     </div>
@@ -3051,11 +3051,10 @@ Table OF Contents
 
                                 </div>
                                 <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
+                                    <small>${size}</small>
+                                    <h5>SUBTOTAL: ${cart.getTotalMoney()} VNĐ</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="#">Giỏ hàng</a>
                                     <a href="#">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>

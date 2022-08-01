@@ -117,8 +117,6 @@ public class SignInServlet extends HttpServlet {
             }else {
                 req.setAttribute("c",customer);
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
-                req.setAttribute("isSingup",true);
-
                 requestDispatcher.forward(req,resp);
             }
         }
