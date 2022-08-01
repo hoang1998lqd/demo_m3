@@ -12,6 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
@@ -276,6 +277,29 @@
     <div class="container">
         <!-- row -->
         <div class="row">
+            <h2>Thông tin giỏ hàng:</h2>
+            <table border="1">
+                <tr>
+                    <td>Tên sản phẩm</td>
+                    <td>Ảnh</td>
+                    <td>Số lượng</td>
+                    <td>Giá</td>
+                    <td>Tổng tiền</td>
+                    <td>Lựa chọn</td>
+                </tr>
+                <c:forEach items="${sessionScope.cart}" var="entry">
+                    <tr>
+                        <td>${entry.key }</td>
+                        <td>${entry.value.product.name }</td>
+                        <td><img src="/finalweb10/download?image=${entry.value.product.image }" width="100" /></td>
+                        <td>${entry.value.quantity }</td>
+                        <td>${entry.value.unitPrice }</td>
+                        <td>${entry.value.quantity * entry.value.unitPrice}</td>
+                        <td><a href="/finalweb10/delete-from-cart?key=${entry.key }">Xoa</a></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <a href="/finalweb10/member/add-order">Thanh toan</a>
         </div>
         <!-- /row -->
     </div>

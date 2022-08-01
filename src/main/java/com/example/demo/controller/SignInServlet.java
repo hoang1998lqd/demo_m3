@@ -82,6 +82,7 @@ public class SignInServlet extends HttpServlet {
             if (customerService.checkTagName(userName,customers) == 1){
                 req.setAttribute("messageSignUp",message);
                 req.setAttribute("Username",userName);
+                req.setAttribute("isSingup",true);
                 req.setAttribute("username","Tài khoản đã tồn tại. Vui lòng tạo tài khoản khác !!!");
                 check =false;
             }
@@ -116,6 +117,8 @@ public class SignInServlet extends HttpServlet {
             }else {
                 req.setAttribute("c",customer);
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
+                req.setAttribute("isSingup",true);
+
                 requestDispatcher.forward(req,resp);
             }
         }

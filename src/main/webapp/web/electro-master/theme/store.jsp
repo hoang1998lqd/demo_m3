@@ -2986,7 +2986,7 @@ Table OF Contents
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="index.jsp" class="logo">
+                        <a href="/web/electro-master/theme/home" class="logo">
                             <img src="../img/logo.png" alt="">
                         </a>
                     </div>
@@ -3147,16 +3147,12 @@ Table OF Contents
                 <div class="aside">
                     <h3 class="aside-title">Danh mục sản phẩm</h3>
                     <div class="checkbox-filter">
-
-
-
                         <c:forEach items="${categories}" var="c">
                             <div class="input-checkbox">
                                 <input type="checkbox" id="category-${c.getId()}">
                                 <label for="category-${c.getId()}">
                                     <span></span>
-                                    <a href="category?id=${c.getId()}" >${c.getName()}</a>
-
+                                    <a href="store/category?Cid=${c.getId()}" >${c.getName()}</a>
                                         <%--<small>(120)</small>--%>
                                 </label>
                             </div>
@@ -3276,7 +3272,7 @@ Table OF Contents
                     <c:forEach items="${products}" var="p">
                         <!-- product -->
                         <div class="col-md-4 col-xs-6">
-                            <div class="product">
+                            <div class="product" style="height: 362px; width: 284px">
                                 <div class="product-img">
                                     <img src="${p.getImg()}"  style="height: 250px; width: 250px" alt="">
                                     <div class="product-label">
@@ -3292,12 +3288,12 @@ Table OF Contents
                                     </div>
                                 </div>
                                 <div class="product-body">
-                                    <p class="product-category">Category</p>
-                                    <h3 class="product-name"><a href="#">${p.getName()}</a></h3>
+                                    <p class="product-category">${p.getCategory().getName()}</p>
+                                    <h3 class="product-name"><a href="cart/product?Pid=${p.getId()}">${p.getName()}</a></h3>
                                     <h4 class="product-price">${p.getPrice() - p.getPrice() * p.getDiscount()/100 } <del class="product-old-price">${p.getPrice()}</del></h4>
                                 </div>
                                 <div class="add-to-cart">
-                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                                    <button class="add-to-cart-btn"><a class="fa fa-shopping-cart" href="cart/product?Pid=${p.getId()}"> Thêm vào giỏ hàng</a></button>
                                 </div>
                             </div>
                         </div>
@@ -3338,9 +3334,7 @@ Table OF Contents
                 <div class="newsletter">
                     <p>Đăng ký để nhận <strong>Thông tin mới nhất</strong></p>
                     <form>
-                        <label>
-                            <input class="input" type="email" placeholder="Enter Your Email">
-                        </label>
+                        <input class="input" type="email" placeholder="Enter Your Email">
                         <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
                     </form>
                     <ul class="newsletter-follow">

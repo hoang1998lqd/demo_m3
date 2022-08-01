@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.Brand;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.service.BrandService;
+import com.example.demo.service.CategoryService;
+import com.example.demo.service.ProductService;
 
 
 import javax.servlet.ServletException;
@@ -15,10 +18,12 @@ import java.util.ArrayList;
 
 @WebServlet(urlPatterns = {"/web/electro-master/theme/home"})
 public class ProductServlet extends HttpServlet {
+    private final ProductService productService = new ProductService();
+    private final BrandService brandService = new BrandService();
+    private final CategoryService categoryService = new CategoryService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        String action =  req.getParameter("action");
         displayAllProduct(req,resp);
     }
 
@@ -29,18 +34,18 @@ public class ProductServlet extends HttpServlet {
 //        Category category = new Category(1,"Máy tính xách tay");
 //        Category category1 = new Category(2,"Phụ kiện");
 //        Category category2 = new Category(3,"Điện thoại");
-//        Product product = new Product(1,"Laptop Dell",500000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg"
-//                ,50,"Còn hàng",30,category);
-//        Product product1 = new Product(2,"Laptop Dell",1000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg"
-//                ,50,"Còn hàng",0,category);
-//        Product product2 = new Product(3,"Laptop Dell",2000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg"
-//                ,50,"Còn hàng",10,category);
-//        Product product3 = new Product(4,"Laptop Dell",500000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg"
-//                ,50,"Còn hàng",30,category);
-//        Product product4 = new Product(5,"Laptop Dell",500000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg"
-//                ,50,"Còn hàng",20,category);
-//        Product product5 = new Product(6,"Laptop Dell",500000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg"
-//                ,50,"Còn hàng",15,category);
+//        Product product = new Product(1,"LaptopDell",5000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg",
+//                10,category,1,10,brand);
+//        Product product1 = new Product(1,"LaptopDell",5000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg",
+//                10,category,1,0,brand);
+//        Product product2 = new Product(1,"LaptopDell",5000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg",
+//                10,category1,1,10,brand);
+//        Product product3 = new Product(1,"LaptopDell",5000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg",
+//                10,category,1,15,brand);
+//        Product product4 = new Product(1,"LaptopDell",5000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg",
+//                10,category,1,0,brand);
+//        Product product5 = new Product(1,"LaptopDell",5000000,"Đắt","https://i.9mobi.vn/cf/Images/huy/2021/12/6/anh-gai-xinh-3.jpg",
+//                10,category2,1,10,brand);
 //        ArrayList<Product> products = new ArrayList<>();
 //        products.add(product);
 //        products.add(product1);
@@ -58,10 +63,12 @@ public class ProductServlet extends HttpServlet {
 //        brands.add(brand);
 //        brands.add(brand1);
 //        brands.add(brand2);
-//
-//        req.setAttribute("categories",categories);
-//        req.setAttribute("products",products);
-//        req.setAttribute("brands",brands);
+        ArrayList<Product>  products = productService.findAll();
+        ArrayList<Brand>  brands = brandService.findAll();
+        ArrayList<Category>  categories = categoryService.findAll();
+        req.setAttribute("categories",categories);
+        req.setAttribute("products",products);
+        req.setAttribute("brands",brands);
         req.getRequestDispatcher("/web/electro-master/theme/index.jsp").forward(req,resp);
 
     }

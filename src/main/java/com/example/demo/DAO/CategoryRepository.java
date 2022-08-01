@@ -35,10 +35,6 @@ public class CategoryRepository {
         return categories;
     }
 
-    public static void main(String[] args) {
-        CategoryRepository categoryRepository = new CategoryRepository();
-        categoryRepository.deleteById(3);
-    }
     public Category findById(int id) {
         try {
             Connection connection = connectMySQL.getConnection();

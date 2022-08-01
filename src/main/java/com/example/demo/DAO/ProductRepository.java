@@ -23,19 +23,11 @@ public class ProductRepository {
     private final String UPDATE_PRODUCT = "update product set name = ?, price = ?, description = ?, image = ?" +
             "amount = ?,category_id = ?, discount = ?, brand_id = ? where id = ?";
 
+    private final String SELECT_PRODUCT_BY_CATEGORY = "select * from product where product.category_id = ?";
+    private final String SELECT_PRODUCT_BY_BRAND = "select * from product where product.brand_id = ?";
+    private final String SELECT_PRODUCT_BY_BRAND_AND_CATEGORY = "select * from product where product.category_id = ? " +
+            "and product.brand_id = ?";
 
-    public static void main(String[] args) {
-        Category category = new Category(1,"Máy tính");
-        Brand brand = new Brand(1,"Dell");
-        Product product = new Product("Laptop Dell Gaming G15 5515",23500000,
-                "Dell inspiron 5515 là một cái tên quá hot trong năm 2021 và nửa đầu năm 2022. Khi Dell tung ra một " +
-                        "loạt các sản phẩm giá rẻ trong thời điểm giữa năm 2021, thì Inspiron 5515 nổi bật như một best " +
-                        "choice trong phân khúc dưới 20 triệu. Vậy Dell 5515 có những điểm gì nổi bật mà lại được ưu ái " +
-                        "đến vậy. Hãy cùng tìm hiểu qua bài viết dưới đây của Electronic Store nhé !",
-                "https://laptop123.com.vn/upload/product/laptop-dell-g15-gia-soc.png",10,category,10,brand);
-        ProductRepository productRepository = new ProductRepository();
-        productRepository.create(product);
-    }
 
     private Product getProduct(int id, ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
@@ -45,15 +37,110 @@ public class ProductRepository {
         int amount = resultSet.getInt("amount");
         int category_id = resultSet.getInt("category_id");
         Category category = categoryRepository.findById(category_id);
+        int status = resultSet.getInt("status");
         int discount = resultSet.getInt("discount");
         int brand_id = resultSet.getInt("brand_id");
         Brand brand = brandRepository.findById(brand_id);
-        return new Product(name, price, description, img, amount, category,discount,brand);
+        return  new Product(id,name,price,description,img,amount,category,status,discount,brand);
     }
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+
+    // Tìm kiếm sản phẩm theo danh mục
+    public  ArrayList<Product> findProductByCategory(int id){
+        ArrayList<Product> products = new ArrayList<>();
+        try{
+            connection = connectMySQL.getConnection();
+            statement = connection.prepareStatement(SELECT_PRODUCT_BY_CATEGORY);
+            statement.setInt(1,id);
+            resultSet =statement.executeQuery();
+            while (resultSet.next()){
+                int idProduct  = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                String img = resultSet.getString("image");
+                int amount = resultSet.getInt("amount");
+                Category category = categoryRepository.findById(id);
+                int status = resultSet.getInt("status");
+                int discount = resultSet.getInt("discount");
+                int brand_id = resultSet.getInt("brand_id");
+                Brand brand = brandRepository.findById(brand_id);
+                products.add(new Product(idProduct,name,price,description,img,amount,category,status,discount,brand));
+            }
+
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return products;
+    }
+
+
+    // Tìm kiếm sản phẩm theo thương hiệu
+    public ArrayList<Product> findProductByBrand(int id){
+        ArrayList<Product> products = new ArrayList<>();
+        try{
+            connection = connectMySQL.getConnection();
+            statement = connection.prepareStatement(SELECT_PRODUCT_BY_BRAND);
+            statement.setInt(1,id);
+            while (resultSet.next()){
+                int idProduct  = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                String img = resultSet.getString("image");
+                int amount = resultSet.getInt("amount");
+                int category_id = resultSet.getInt("category_id");
+                Category category = categoryRepository.findById(category_id);
+                int status = resultSet.getInt("status");
+                int discount = resultSet.getInt("discount");
+                Brand brand = brandRepository.findById(id);
+                Product product = new Product(idProduct,name,price,description,img,amount,category,status,discount,brand);
+                products.add(product);
+            }
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return products;
+    }
+
+    // Tìm kiếm sản phẩm theo thương hiệu và danh mục
+
+    public ArrayList<Product> findProductByBrandCategory(int category_id, int brand_id){
+        ArrayList<Product> products = new ArrayList<>();
+        try{
+            connection = connectMySQL.getConnection();
+            statement = connection.prepareStatement(SELECT_PRODUCT_BY_BRAND_AND_CATEGORY);
+            statement.setInt(1,category_id);
+            statement.setInt(2,brand_id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                int idProduct  = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int price = resultSet.getInt("price");
+                String description = resultSet.getString("description");
+                String img = resultSet.getString("image");
+                int amount = resultSet.getInt("amount");
+                Category category = categoryRepository.findById(category_id);
+                int status = resultSet.getInt("status");
+                int discount = resultSet.getInt("discount");
+                Brand brand = brandRepository.findById(brand_id);
+                Product product = new Product(idProduct,name,price,description,img,amount,category,status,discount,brand);
+                products.add(product);
+            }
+
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return products;
+    }
+
 
     public Product findById(int id) {
         try {
-            Connection connection = connectMySQL.getConnection();
+            connection = connectMySQL.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -96,6 +96,7 @@ public class CustomerRepository implements ICRUD<Customer> {
         statement.setString(3,customer.getPhone());
         statement.setString(4,customer.getEmail());
         statement.setString(5,customer.getAddress());
+        statement.setInt(6,customer.getId());
         statement.executeUpdate();
     }
 

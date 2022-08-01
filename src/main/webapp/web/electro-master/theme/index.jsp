@@ -3133,7 +3133,9 @@ Table OF Contents
     <!-- /MAIN HEADER -->
 </header>
 <!-- /HEADER -->
+<%--<jsp:include page="header.jsp"  >--%>
 
+<%--</jsp:include>--%>
 <!-- NAVIGATION -->
 <nav id="navigation">
     <!-- container -->
@@ -3236,12 +3238,12 @@ Table OF Contents
                     <h3 class="title">Sản phẩm mới</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <c:forEach items="${categories}" var="c">
-                            <li class="active"><a data-toggle="tab" href="categoryHome?id=${c.getId()}">${c.getName()}</a></li>
-<%--                            <li><a data-toggle="tab" href="#tab1">Điện thoại</a></li>--%>
-<%--                            <li><a data-toggle="tab" href="#tab1">Máy ảnh</a></li>--%>
-<%--                            <li><a data-toggle="tab" href="#tab1">Phụ kiện</a></li>--%>
-                            </c:forEach>
+<%--                            <c:forEach items="${categories}" var="c">--%>
+<%--                            <li class="active"><a data-toggle="tab" href="categoryHome?id=${c.getId()}">${c.getName()}</a></li>--%>
+<%--&lt;%&ndash;                            <li><a data-toggle="tab" href="#tab1">Điện thoại</a></li>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <li><a data-toggle="tab" href="#tab1">Máy ảnh</a></li>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <li><a data-toggle="tab" href="#tab1">Phụ kiện</a></li>&ndash;%&gt;--%>
+<%--                            </c:forEach>--%>
                         </ul>
                     </div>
                 </div>
@@ -3257,7 +3259,7 @@ Table OF Contents
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <c:forEach items="${products}" var="p">
                                 <!-- product -->
-                                <div class="product">
+                                <div class="product" >
                                     <div class="product-img">
                                         <img src="${p.getImg()}"  alt="">
                                         <div class="product-label">
@@ -3271,12 +3273,12 @@ Table OF Contents
                                         </div>
                                     </div>
                                     <div class="product-body">
-                                        <p class="product-category">Category</p>
+                                        <p class="product-category">${p.getCategory().getName()}</p>
                                         <h3 class="product-name"><a href="#">${p.getName()}</a></h3>
                                         <h4 class="product-price">${p.getPrice() - p.getPrice() * p.getDiscount()/100 } <del class="product-old-price">${p.getPrice()}</del></h4>
                                     </div>
                                     <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                                        <button class="add-to-cart-btn" ><a class="fa fa-shopping-cart" href="home/product?Pid=${p.getId()}">Thêm vào giỏ hàng</a> </button>
                                     </div>
                                 </div>
                                 <!-- /product -->
@@ -3973,110 +3975,111 @@ Table OF Contents
 </div>
 <!-- /NEWSLETTER -->
 
+<jsp:include page="footer.jsp"  ></jsp:include>
 <!-- FOOTER -->
-<footer id="footer">
-    <!-- top footer -->
-    <div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-3 col-xs-6">
-                    <div class="footer">
-                        <h3 class="footer-title">Giới thiệu</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
-                        <ul class="footer-links">
-                            <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-                            <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
-                        </ul>
-                    </div>
-                </div>
+<%--<footer id="footer">--%>
+<%--    <!-- top footer -->--%>
+<%--    <div class="section">--%>
+<%--        <!-- container -->--%>
+<%--        <div class="container">--%>
+<%--            <!-- row -->--%>
+<%--            <div class="row">--%>
+<%--                <div class="col-md-3 col-xs-6">--%>
+<%--                    <div class="footer">--%>
+<%--                        <h3 class="footer-title">Giới thiệu</h3>--%>
+<%--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>--%>
+<%--                        <ul class="footer-links">--%>
+<%--                            <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>--%>
+<%--                            <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>--%>
+<%--                            <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                <div class="col-md-3 col-xs-6">
-                    <div class="footer">
-                        <h3 class="footer-title">Danh mục</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">Hot deals</a></li>
-                            <li><a href="laptop.jsp">Máy tính</a></li>
-                            <li><a href="smart-phone.jsp">Điện thoại</a></li>
-                            <li><a href="camera.jsp">Máy ảnh</a></li>
-                            <li><a href="accessories.jsp">Phụ kiện</a></li>
-                        </ul>
-                    </div>
-                </div>
+<%--                <div class="col-md-3 col-xs-6">--%>
+<%--                    <div class="footer">--%>
+<%--                        <h3 class="footer-title">Danh mục</h3>--%>
+<%--                        <ul class="footer-links">--%>
+<%--                            <li><a href="#">Hot deals</a></li>--%>
+<%--                            <li><a href="laptop.jsp">Máy tính</a></li>--%>
+<%--                            <li><a href="smart-phone.jsp">Điện thoại</a></li>--%>
+<%--                            <li><a href="camera.jsp">Máy ảnh</a></li>--%>
+<%--                            <li><a href="accessories.jsp">Phụ kiện</a></li>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                <div class="clearfix visible-xs"></div>
+<%--                <div class="clearfix visible-xs"></div>--%>
 
-                <div class="col-md-3 col-xs-6">
-                    <div class="footer">
-                        <h3 class="footer-title">Thông tin</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">Giới thiệu</a></li>
-                            <li><a href="#">Kết nối</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-<%--                            <li><a href="#">Orders and Returns</a></li>--%>
-                            <li><a href="#">Điều khoản</a></li>
-                        </ul>
-                    </div>
-                </div>
+<%--                <div class="col-md-3 col-xs-6">--%>
+<%--                    <div class="footer">--%>
+<%--                        <h3 class="footer-title">Thông tin</h3>--%>
+<%--                        <ul class="footer-links">--%>
+<%--                            <li><a href="#">Giới thiệu</a></li>--%>
+<%--                            <li><a href="#">Kết nối</a></li>--%>
+<%--                            <li><a href="#">Chính sách bảo mật</a></li>--%>
+<%--&lt;%&ndash;                            <li><a href="#">Orders and Returns</a></li>&ndash;%&gt;--%>
+<%--                            <li><a href="#">Điều khoản</a></li>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                <div class="col-md-3 col-xs-6">
-                    <div class="footer">
-                        <h3 class="footer-title">Dịch vụ</h3>
-                        <ul class="footer-links">
-<%--                            <li><a href="#">My Account</a></li>--%>
-<%--                            <div class="dropdownAccount">--%>
-<%--                                <button class="dropbtn">Tên người dùng hoặc Admin (Phần xử lý back)</button>--%>
-<%--                                <div class="dropdown-content">--%>
-<%--                                    <a href="customer-detail.jsp">Tài khoản của tôi</a>--%>
-<%--                                    <a href="#">Lịch sử mua hàng</a>--%>
-<%--                                    <a href="#">Đăng xuất</a>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-                            <li><a href="#">Giỏ hàng</a></li>
-<%--                            <li><a href="#">Wishlist</a></li>--%>
-<%--                            <li><a href="#">Track My Order</a></li>--%>
-                            <li><a href="#">Hỗ trợ</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
-    <!-- /top footer -->
+<%--                <div class="col-md-3 col-xs-6">--%>
+<%--                    <div class="footer">--%>
+<%--                        <h3 class="footer-title">Dịch vụ</h3>--%>
+<%--                        <ul class="footer-links">--%>
+<%--&lt;%&ndash;                            <li><a href="#">My Account</a></li>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <div class="dropdownAccount">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                <button class="dropbtn">Tên người dùng hoặc Admin (Phần xử lý back)</button>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                <div class="dropdown-content">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                    <a href="customer-detail.jsp">Tài khoản của tôi</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                    <a href="#">Lịch sử mua hàng</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                    <a href="#">Đăng xuất</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            </div>&ndash;%&gt;--%>
+<%--                            <li><a href="#">Giỏ hàng</a></li>--%>
+<%--&lt;%&ndash;                            <li><a href="#">Wishlist</a></li>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <li><a href="#">Track My Order</a></li>&ndash;%&gt;--%>
+<%--                            <li><a href="#">Hỗ trợ</a></li>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <!-- /row -->--%>
+<%--        </div>--%>
+<%--        <!-- /container -->--%>
+<%--    </div>--%>
+<%--    <!-- /top footer -->--%>
 
-    <!-- bottom footer -->
-    <div id="bottom-footer" class="section">
-        <div class="container">
-            <!-- row -->
-            <div class="row">
+<%--    <!-- bottom footer -->--%>
+<%--    <div id="bottom-footer" class="section">--%>
+<%--        <div class="container">--%>
+<%--            <!-- row -->--%>
+<%--            <div class="row">--%>
 
-                <div class="col-md-12 text-center">
-                    <h3 class="footer-title" style="color: #FFFFFF">Hình thức thanh toán</h3>
-                    <ul class="footer-payments">
-                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-visa"></i></a></li>
-                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-credit-card"></i></a></li>
-                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-paypal"></i></a></li>
-                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-mastercard"></i></a></li>
-                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-discover"></i></a></li>
-                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-amex"></i></a></li>
-                    </ul>
-                    <span class="copyright">
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Store is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" style="color: #B9BABC">C0422H1</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</span>
-                </div>
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
-    <!-- /bottom footer -->
-</footer>
+<%--                <div class="col-md-12 text-center">--%>
+<%--                    <h3 class="footer-title" style="color: #FFFFFF">Hình thức thanh toán</h3>--%>
+<%--                    <ul class="footer-payments">--%>
+<%--                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-visa"></i></a></li>--%>
+<%--                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-credit-card"></i></a></li>--%>
+<%--                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-paypal"></i></a></li>--%>
+<%--                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-mastercard"></i></a></li>--%>
+<%--                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-discover"></i></a></li>--%>
+<%--                        <li><a href="#" style="color: #B9BABC"><i class="fa fa-cc-amex"></i></a></li>--%>
+<%--                    </ul>--%>
+<%--                    <span class="copyright">--%>
+<%--								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->--%>
+<%--								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Store is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" style="color: #B9BABC">C0422H1</a>--%>
+<%--                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->--%>
+<%--							</span>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <!-- /row -->--%>
+<%--        </div>--%>
+<%--        <!-- /container -->--%>
+<%--    </div>--%>
+<%--    <!-- /bottom footer -->--%>
+<%--</footer>--%>
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
