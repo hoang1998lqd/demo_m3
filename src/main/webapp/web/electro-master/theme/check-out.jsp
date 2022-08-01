@@ -153,54 +153,40 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
-                        <!-- Wishlist -->
-<%--                        <div>--%>
-<%--                            <a href="#">--%>
-<%--                                <i class="fa fa-heart-o"></i>--%>
-<%--                                <span>Your Wishlist</span>--%>
-<%--                                <div class="qty">2</div>--%>
-<%--                            </a>--%>
-<%--                        </div>--%>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
+                        <c:set var="size" value = "${sessionScope.size}"/>
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+                                <div class="qty">${size}</div>
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="../img/product01.png" alt="">
+                                    <c:forEach items="${cart.getItems()}" var="item">
+                                        <div class="product-widget">
+                                            <div class="product-img">
+                                                <img src="${item.getProduct().getImg()}" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h3 class="product-name"><a href="#">${item.getProduct().getName()}</a></h3>
+                                                <h4 class="product-price"><span class="qty">${item.getQuantity()}x</span>${item.getProduct().getPrice()}</h4>
+                                            </div>
+                                            <form action="/web/electro-master/theme/item?Pid=${item.getProduct().getId()}" method="post">
+                                                <button class="delete" name="id" value ="${item.getProduct().getId()}"><i class="fa fa-close" ></i></button>
+                                            </form>
                                         </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="../img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                                 <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
+                                    <c:set var="cart" value = "${sessionScope.cart}"/>
+                                    <small>${size}</small>
+                                    <h5>SUBTOTAL: ${cart.getTotalMoney()} VNĐ</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="#">Giỏ hàng</a>
-                                    <a href="#">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="/web/electro-master/theme/check-out">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -234,9 +220,9 @@
         <div id="responsive-nav">
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="index.jsp">Trang chủ</a></li>
+                <li class="active"><a href="/web/electro-master/theme/home">Trang chủ</a></li>
                 <li><a href="product.jsp">Hot Deals</a></li>
-                <li><a href="store.jsp">Sản phẩm</a></li>
+                <li><a href="/web/electro-master/theme/store">Sản phẩm</a></li>
                 <li><a href="laptop.jsp">Máy tính</a></li>
                 <li><a href="smart-phone.jsp">Điện thoại</a></li>
                 <li><a href="camera.jsp">Máy ảnh</a></li>
@@ -279,41 +265,26 @@
 
             <div class="col-md-7">
                 <!-- Billing Details -->
+                <c:set var="customer" value = "${sessionScope.customer}"/>
                 <div class="billing-details">
                     <div class="section-title">
                         <h3 class="title">Địa chỉ nhận hàng</h3>
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="first-name" placeholder="Họ và tên">
+                        <input class="input" type="text" name="first-name" value="${customer.getName()}" placeholder="Họ và tên">
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="last-name" placeholder="Số điện thoại">
+                        <input class="input" type="text" name="last-name" value="${customer.getPhone()}" placeholder="Số điện thoại">
                     </div>
                     <div class="form-group">
-                        <input class="input" type="email" name="email" placeholder="Email">
+                        <input class="input" type="email" name="email" value="${customer.getEmail()}" placeholder="Email">
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="address" placeholder="Địa chỉ">
+                        <input class="input" type="text" name="address" value="${customer.getAddress()}" placeholder="Địa chỉ">
                     </div>
-<%--                    <div class="form-group">--%>
-<%--                        <input class="input" type="text" name="city" placeholder="City">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <input class="input" type="text" name="country" placeholder="Country">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <input class="input" type="text" name="zip-code" placeholder="ZIP Code">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <input class="input" type="tel" name="tel" placeholder="Telephone">--%>
-<%--                    </div>--%>
                     <div class="form-group">
                         <div class="input-checkbox">
                             <input type="checkbox" id="create-account">
-<%--                            <label for="create-account">--%>
-<%--                                <span></span>--%>
-<%--                                Create Account?--%>
-<%--                            </label>--%>
                             <div class="caption">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                                 <input class="input" type="password" name="password" placeholder="Enter Your Password">
@@ -328,50 +299,18 @@
                     <div class="section-title">
                         <h3 class="title">Note</h3>
                     </div>
-<%--                    <div class="input-checkbox">--%>
-<%--                        <input type="checkbox" id="shiping-address">--%>
-<%--                        <label for="shiping-address">--%>
-<%--                            <span></span>--%>
-<%--                            Ship to a diffrent address?--%>
-<%--                        </label>--%>
-<%--                        <div class="caption">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="text" name="first-name" placeholder="First Name">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="text" name="last-name" placeholder="Last Name">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="email" name="email" placeholder="Email">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="text" name="address" placeholder="Address">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="text" name="city" placeholder="City">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="text" name="country" placeholder="Country">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="text" name="zip-code" placeholder="ZIP Code">--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <input class="input" type="tel" name="tel" placeholder="Telephone">--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
                 </div>
                 <!-- /Shiping Details -->
 
                 <!-- Order notes -->
                 <div class="order-notes">
-                    <textarea class="input" placeholder="Order Notes"></textarea>
+                    <textarea class="input" name="note" placeholder="Order Notes"></textarea>
                 </div>
                 <!-- /Order notes -->
             </div>
 
             <!-- Order Details -->
+            <c:set var="size" value = "${sessionScope.size}"/>
             <div class="col-md-5 order-details">
                 <div class="section-title text-center">
                     <h3 class="title">Thông tin đơn hàng</h3>
@@ -381,15 +320,14 @@
                         <div><strong>Sản phẩm</strong></div>
                         <div><strong>Thành tiền</strong></div>
                     </div>
+
                     <div class="order-products">
+                        <c:forEach items="${cart.getItems()}" var="item">
                         <div class="order-col">
-                            <div>1x Product Name Goes Here</div>
-                            <div>$980.00</div>
+                            <div>${item.getProduct().getName()}</div>
+                            <div>${item.getProduct().getPrice() * item.getQuantity()}</div>
                         </div>
-                        <div class="order-col">
-                            <div>2x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
+                        </c:forEach>
                     </div>
                     <div class="order-col">
                         <div>Shiping</div>
@@ -397,41 +335,9 @@
                     </div>
                     <div class="order-col">
                         <div><strong>Số tiền cần thanh toán</strong></div>
-                        <div><strong class="order-total">$2940.00</strong></div>
+                        <div><strong class="order-total" >${cart.getTotalMoney()}</strong></div>
                     </div>
                 </div>
-<%--                <div class="payment-method">--%>
-<%--                    <div class="input-radio">--%>
-<%--                        <input type="radio" name="payment" id="payment-1">--%>
-<%--                        <label for="payment-1">--%>
-<%--                            <span></span>--%>
-<%--                            Direct Bank Transfer--%>
-<%--                        </label>--%>
-<%--                        <div class="caption">--%>
-<%--                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="input-radio">--%>
-<%--                        <input type="radio" name="payment" id="payment-2">--%>
-<%--                        <label for="payment-2">--%>
-<%--                            <span></span>--%>
-<%--                            Cheque Payment--%>
-<%--                        </label>--%>
-<%--                        <div class="caption">--%>
-<%--                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="input-radio">--%>
-<%--                        <input type="radio" name="payment" id="payment-3">--%>
-<%--                        <label for="payment-3">--%>
-<%--                            <span></span>--%>
-<%--                            Paypal System--%>
-<%--                        </label>--%>
-<%--                        <div class="caption">--%>
-<%--                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
                 <div class="input-checkbox">
                     <input type="checkbox" id="terms">
                     <label for="terms">
@@ -439,7 +345,16 @@
                         I've read and accept the <a href="#">terms & conditions</a>
                     </label>
                 </div>
-                <a href="#" class="primary-btn order-submit">Đặt hàng</a>
+                <c:if test="${sessionScope.customer != null}">
+                    <form action="/web/electro-master/theme/check-out" method="post">
+                <input type="submit" class="primary-btn order-submit" value="Đặt hàng"></input>
+                    </form>
+                </c:if>
+                    <c:if test="${sessionScope.customer == null}">
+                        <form action="/web/electro-master/theme/login" method="post">
+                        <a href="/web/electro-master/theme/login-2.jsp" class="primary-btn order-submit">Bạn cần phải đăng nhập</a>
+                        </form>
+                    </c:if>
             </div>
             <!-- /Order Details -->
         </div>

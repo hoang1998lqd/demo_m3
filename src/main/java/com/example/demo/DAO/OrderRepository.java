@@ -1,10 +1,7 @@
 package com.example.demo.DAO;
 
 import com.example.demo.connection.connectMySQL;
-import com.example.demo.model.Cart;
-import com.example.demo.model.Customer;
-import com.example.demo.model.Item;
-import com.example.demo.model.Order;
+import com.example.demo.model.*;
 import com.example.demo.service.CustomerService;
 
 import java.sql.*;
@@ -119,33 +116,35 @@ public class OrderRepository {
     // Lấy ra thông tin Order vừa mới được tạo
     // Ngay khi vừa tạo và thêm (Click vào đặt hàng thì) Order vào database thì mình sẽ lấy luôn ID đó vào
     // trong order detail.
-    public void addOrder(Customer customer, Cart cart){
+    public void addOrder(Customer customer, Cart cart, String note){
         LocalDate date = LocalDate.now();
         Date date_order = Date.valueOf(date);
         try{
             connection = connectMySQL.getConnection();
-            statement = connection.prepareStatement(INSERT_ORDERS_NOT_NOTE);
+            statement = connection.prepareStatement(INSERT_ORDERS);
             statement.setInt(1,customer.getId());
             statement.setDate(2,date_order);
             statement.setDate(3,date_order);
             statement.setString(4,customer.getAddress());
             statement.setInt(5,0);
-            int total_price = cart.getTotalMoney();
+            statement.setString(6,note);
             statement.executeUpdate();
             statement = connection.prepareStatement(SELECT_ORDER_LAST);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int order_id = resultSet.getInt(1);
-
                 for (Item item : cart.getItems()) {
                     statement = connection.prepareStatement(INSERT_ORDER_DETAIL);
                     statement.setInt(1, order_id);
                     statement.setInt(2,item.getProduct().getId());
                     statement.setInt(3,item.getQuantity());
+                    int quantity = item.getQuantity();
+                    int amount = item.getProduct().getAmount() - quantity;
+                    Product product = item.getProduct();
+                    product.setAmount(amount);
                     statement.executeUpdate();
                 }
             }
-
         }catch (SQLException e){
             e.printStackTrace();
         }

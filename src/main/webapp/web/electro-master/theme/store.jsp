@@ -3045,17 +3045,19 @@ Table OF Contents
                                             <h3 class="product-name"><a href="#">${item.getProduct().getName()}</a></h3>
                                             <h4 class="product-price"><span class="qty">${item.getQuantity()}x</span>${item.getProduct().getPrice()}</h4>
                                         </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
+                                        <form action="/web/electro-master/theme/item?Pid=${item.getProduct().getId()}" method="post">
+                                        <button class="delete" name="id" value ="${item.getProduct().getId()}"><i class="fa fa-close" ></i></button>
+                                        </form>
                                     </div>
                                     </c:forEach>
-
                                 </div>
                                 <div class="cart-summary">
+                                    <c:set var="cart" value = "${sessionScope.cart}"/>
                                     <small>${size}</small>
                                     <h5>SUBTOTAL: ${cart.getTotalMoney()} VNĐ</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="#">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="/web/electro-master/theme/check-out">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
