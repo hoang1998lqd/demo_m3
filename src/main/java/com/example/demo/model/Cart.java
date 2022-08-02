@@ -57,10 +57,10 @@ public class Cart {
     public int getTotalMoney(){
         int price = 0;
         for (Item item : items){
-            price += (item.getQuantity()) * item.getProduct().getPrice();
-            return price;
+            price += item.getQuantity() * (item.getProduct().getPrice()-
+                    item.getProduct().getPrice() * item.getProduct().getDiscount()/100);
         }
-        return 0;
+        return price;
     }
 
 

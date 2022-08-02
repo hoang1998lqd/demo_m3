@@ -34,9 +34,11 @@ public class storeServlet extends HttpServlet {
         ArrayList<Product>  products = productService.findAll();
         ArrayList<Brand>  brands = brandService.findAll();
         ArrayList<Category>  categories = categoryService.findAll();
+        ArrayList<Product>  listTop = productService.findProductTop();
         req.setAttribute("categories",categories);
         req.setAttribute("products",products);
         req.setAttribute("brands",brands);
+        req.setAttribute("listTop",listTop);
         req.getRequestDispatcher("/web/electro-master/theme/store.jsp").forward(req,resp);
 
     }
@@ -47,6 +49,11 @@ public class storeServlet extends HttpServlet {
 //        class : active HTML sẽ giúp tích vào chân đỏ trang mình chọn
         products = productService.findProductByCategory(id);
 
+        return products;
+    }
+
+    private ArrayList<Product> getProductByBrand(int id){
+        ArrayList<Product> products = productService.findProductByBrand(id);
         return products;
     }
 

@@ -43,8 +43,7 @@ public class SignInServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("customer",customer);
             session.setAttribute("messageSignIn",message);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/web/electro-master/theme/home");
-            requestDispatcher.forward(request,response);
+            response.sendRedirect("/web/electro-master/theme/home");
         } else if (checkLogin(userName,password,customers) == 2) {
             HttpSession session = request.getSession();
             Customer customer = customerService.findCustomerByAccount(userName,customers);
@@ -58,6 +57,78 @@ public class SignInServlet extends HttpServlet {
         }
     }
 
+//    private void signUp(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//        String message = "Sign up";
+//        CustomerService customerService = new CustomerService();
+//        ArrayList<Customer> customers = customerService.findAll();
+//        String userName = req.getParameter("Username");
+//        String password = req.getParameter("Password");
+//        String repeat = req.getParameter("Repeat");
+//        String name = req.getParameter("Name");
+//        String email = req.getParameter("Email");
+//        String phone = req.getParameter("Phone");
+//        String address = req.getParameter("Address");
+//        Customer customer = new Customer(userName,password,name,phone,email,address);
+//        if (!password.equals(repeat)){
+//            req.setAttribute("messageSignUp",message);
+//            req.setAttribute("messRepeat","Mật khẩu nhập lại không trùng khớp !!!");
+//            req.setAttribute("password",password);
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
+//            requestDispatcher.forward(req,resp);
+//        }else {
+//            boolean check = true;
+//            // Check mật khẩu là số dài từ 6 tới 8 ký tự
+//            if (customerService.checkPassword(password,customers)){
+//                req.setAttribute("messageSignUp",message);
+//                req.setAttribute("messPassword","Mật khẩu là số dài từ 6 tới 8 ký tự !!!");
+//                req.setAttribute("Password",password);
+//                check= false;
+//            }
+//            // Check trùng tài khoản
+//            if (customerService.checkTagName(userName,customers) == 1){
+//                req.setAttribute("messageSignUp",message);
+//                req.setAttribute("Username",userName);
+//                req.setAttribute("isSingup",true);
+//                req.setAttribute("username","Tài khoản đã tồn tại. Vui lòng tạo tài khoản khác !!!");
+//                check =false;
+//            }
+//            // Check Phone
+//             if (customerService.checkPhone(phone,customers) == 1){
+//                req.setAttribute("messageSignUp",message);
+//                req.setAttribute("phone","Số điện thoại đã được sử dụng !!!");
+//                req.setAttribute("Phone",phone);
+//                 check= false;
+//            } if (customerService.checkPhone(phone,customers) == 0){
+//                req.setAttribute("messageSignUp",message);
+//                req.setAttribute("phone","Số điện thoại nhập vào không hợp lệ !!!");
+//                req.setAttribute("Phone",phone);
+//                check = false;
+//            }
+//            // Check Email
+//             if (customerService.checkEmail(email,customers) == 1) {
+//                req.setAttribute("messageSignUp",message);
+//                req.setAttribute("email","Email đã được sử dụng !!!");
+//                req.setAttribute("Email",email);
+//                 check = false;
+//            }  if (customerService.checkEmail(email,customers) == 0) {
+//                req.setAttribute("messageSignUp",message);
+//                req.setAttribute("email","Email nhập vào không hợp lệ !!!");
+//                req.setAttribute("Email",email);
+//                check = false;
+//            }
+//            req.setAttribute("messageSignUp",message);
+//            if (check){
+//                customerService.create(customer);
+//                resp.sendRedirect("/web/electro-master/theme/index.jsp ");
+//            }else {
+//                req.setAttribute("c",customer);
+//                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
+//                requestDispatcher.forward(req,resp);
+//            }
+//        }
+//
+//    }
+
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String message = "Sign up";
         CustomerService customerService = new CustomerService();
@@ -70,13 +141,19 @@ public class SignInServlet extends HttpServlet {
         String phone = req.getParameter("Phone");
         String address = req.getParameter("Address");
         Customer customer = new Customer(userName,password,name,phone,email,address);
-        if (!password.equals(repeat)){
+        if (customerService.checkPassword(password,customers)){
             req.setAttribute("messageSignUp",message);
-            req.setAttribute("messRepeat","Mật khẩu nhập lại không trùng khớp !!!");
+            req.setAttribute("Password","Mật khẩu dài từ 6 tới 8 chữ số !!!");
             req.setAttribute("password",password);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
             requestDispatcher.forward(req,resp);
-        }else {
+        } else if (!password.equals(repeat)) {
+            req.setAttribute("messageSignUp",message);
+            req.setAttribute("messRepeat","Mật khẩu nhập lại không trùng khớp !!!");
+            req.setAttribute("Repeat",password);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
+            requestDispatcher.forward(req,resp);
+        } else {
             boolean check = true;
             // Check trùng tài khoản
             if (customerService.checkTagName(userName,customers) == 1){
@@ -87,11 +164,11 @@ public class SignInServlet extends HttpServlet {
                 check =false;
             }
             // Check Phone
-             if (customerService.checkPhone(phone,customers) == 1){
+            if (customerService.checkPhone(phone,customers) == 1){
                 req.setAttribute("messageSignUp",message);
                 req.setAttribute("phone","Số điện thoại đã được sử dụng !!!");
                 req.setAttribute("Phone",phone);
-                 check= false;
+                check= false;
             } if (customerService.checkPhone(phone,customers) == 0){
                 req.setAttribute("messageSignUp",message);
                 req.setAttribute("phone","Số điện thoại nhập vào không hợp lệ !!!");
@@ -99,11 +176,11 @@ public class SignInServlet extends HttpServlet {
                 check = false;
             }
             // Check Email
-             if (customerService.checkEmail(email,customers) == 1) {
+            if (customerService.checkEmail(email,customers) == 1) {
                 req.setAttribute("messageSignUp",message);
                 req.setAttribute("email","Email đã được sử dụng !!!");
                 req.setAttribute("Email",email);
-                 check = false;
+                check = false;
             }  if (customerService.checkEmail(email,customers) == 0) {
                 req.setAttribute("messageSignUp",message);
                 req.setAttribute("email","Email nhập vào không hợp lệ !!!");
@@ -111,10 +188,10 @@ public class SignInServlet extends HttpServlet {
                 check = false;
             }
             req.setAttribute("messageSignUp",message);
-            if (check){
-                customerService.create(customer);
+            if (check){customerService.create(customer);
                 resp.sendRedirect("/web/electro-master/theme/index.jsp ");
             }else {
+                req.setAttribute("isSingup",true);
                 req.setAttribute("c",customer);
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/web/electro-master/theme/login-2.jsp");
                 requestDispatcher.forward(req,resp);
@@ -122,4 +199,5 @@ public class SignInServlet extends HttpServlet {
         }
 
     }
+
 }

@@ -21,12 +21,13 @@ public class ProductRepository {
     private final String DELETE_PRODUCT_BY_ID = "delete from product where id = ?";
     private final String SELECT_PRODUCT_BY_ID = "select * from product where id = ?";
     private final String UPDATE_PRODUCT = "update product set name = ?, price = ?, description = ?, image = ?" +
-            "amount = ?,category_id = ?, discount = ?, brand_id = ? where id = ?";
+            ", amount = ?,category_id = ?, discount = ?, brand_id = ? where id = ?";
 
     private final String SELECT_PRODUCT_BY_CATEGORY = "select * from product where product.category_id = ?";
     private final String SELECT_PRODUCT_BY_BRAND = "select * from product where product.brand_id = ?";
     private final String SELECT_PRODUCT_BY_BRAND_AND_CATEGORY = "select * from product where product.category_id = ? " +
             "and product.brand_id = ?";
+    private final String SELECT_TOP3_PRODUCT_BUY = "select product_id from product_buy order by tong desc limit 3";
 
 
     private Product getProduct(int id, ResultSet resultSet) throws SQLException {
@@ -78,6 +79,24 @@ public class ProductRepository {
     }
 
 
+    // Tìm kiếm top 3 sản phẩm bán chạy nhất
+    public ArrayList<Product>findProductTop(){
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            connection = connectMySQL.getConnection();
+            statement = connection.prepareStatement(SELECT_TOP3_PRODUCT_BUY);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                int idProduct = resultSet.getInt("product_id");
+                Product product = findById(idProduct);
+                products.add(product);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return products;
+    }
+
     // Tìm kiếm sản phẩm theo thương hiệu
     public ArrayList<Product> findProductByBrand(int id){
         ArrayList<Product> products = new ArrayList<>();
@@ -85,6 +104,7 @@ public class ProductRepository {
             connection = connectMySQL.getConnection();
             statement = connection.prepareStatement(SELECT_PRODUCT_BY_BRAND);
             statement.setInt(1,id);
+            resultSet = statement.executeQuery();
             while (resultSet.next()){
                 int idProduct  = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -182,6 +202,7 @@ public class ProductRepository {
     public void update(Product product) {
         try {
             PreparedStatement preparedStatement = getPreparedStatement(UPDATE_PRODUCT, product);
+            preparedStatement.setInt(9,product.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());;

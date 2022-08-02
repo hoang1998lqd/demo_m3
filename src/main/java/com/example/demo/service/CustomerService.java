@@ -80,6 +80,14 @@ public class CustomerService implements ICRUD<Customer> {
         return 0;
     }
 
+    // Check password có ký tự là số
+    public boolean checkPassword(String pass, ArrayList<Customer> customers){
+        String regex = "^\\d{6,8}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(pass);
+        return matcher.find();
+    }
+
     // Check Email
     public int checkEmail(String email, ArrayList<Customer> customers){
         if (checkTagName(email,customers) == 3){
@@ -102,6 +110,7 @@ public class CustomerService implements ICRUD<Customer> {
         }
         return null;
     }
+
 
 
 }

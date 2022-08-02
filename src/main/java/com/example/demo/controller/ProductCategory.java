@@ -24,6 +24,24 @@ public class ProductCategory extends HttpServlet {
     private final BrandRepository brandRepository = new BrandRepository();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action =  req.getParameter("action");
+        switch (action) {
+            case "category":
+                displayProductByCategory(req, resp);
+                break;
+            case "brand":
+                displayProductByBrand(req, resp);
+        }
+    }
+
+    public ArrayList<Product> getProductByCategory(int id){
+        return productService.findProductByCategory(id);
+    }
+
+    private ArrayList<Product> getProductByBrand(int id){
+        return productService.findProductByBrand(id);
+    }
+    public void displayProductByCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<Category> categories = categoryRepository.findAll();
         ArrayList<Brand> brands = brandRepository.findAll();
         int Cid = Integer.parseInt(req.getParameter("Cid"));
@@ -33,13 +51,15 @@ public class ProductCategory extends HttpServlet {
         req.setAttribute("categories",categories);
         req.getRequestDispatcher("/web/electro-master/theme/store.jsp").forward(req,resp);
     }
-    public ArrayList<Product> getProductByCategory(int id){
-        ArrayList<Product> products;
 
-        // Duyệt database gốc và tìm theo id category. Video phần 2
-//        class : active HTML sẽ giúp tích vào chân đỏ trang mình chọn
-        products = productService.findProductByCategory(id);
-        return products;
+    public void displayProductByBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        ArrayList<Category> categories = categoryRepository.findAll();
+        ArrayList<Brand> brands = brandRepository.findAll();
+        int Bid = Integer.parseInt(req.getParameter("Bid"));
+        ArrayList<Product> list = getProductByBrand(Bid);
+        req.setAttribute("products",list);
+        req.setAttribute("brands",brands);
+        req.setAttribute("categories",categories);
+        req.getRequestDispatcher("/web/electro-master/theme/store.jsp").forward(req,resp);
     }
-
 }

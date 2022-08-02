@@ -3146,7 +3146,7 @@ Table OF Contents
                                 <input type="checkbox" id="category-${c.getId()}">
                                 <label for="category-${c.getId()}">
                                     <span></span>
-                                    <a href="store/category?Cid=${c.getId()}" >${c.getName()}</a>
+                                    <a href="/web/electro-master/theme/store/category?action=category&Cid=${c.getId()}" >${c.getName()}</a>
                                         <%--<small>(120)</small>--%>
                                 </label>
                             </div>
@@ -3184,8 +3184,7 @@ Table OF Contents
                             <input type="checkbox" id="brand-${b.getId()}">
                             <label for="brand-${b.getId()}">
                                 <span></span>
-                                    ${b.getName()}
-<%--                                <small>(578)</small>--%>
+                                <a href="/web/electro-master/theme/store/category?action=brand&Bid=${b.getId()}">${b.getName()}</a>
                             </label>
                         </div>
                         </c:forEach>
@@ -3196,38 +3195,18 @@ Table OF Contents
                 <!-- aside Widget -->
                 <div class="aside">
                     <h3 class="aside-title">Top bán chạy</h3>
+                    <c:forEach items="${listTop}" var="l">
                     <div class="product-widget">
                         <div class="product-img">
-                            <img src="../img/product01.png" alt="">
+                            <img src="${l.getImg()}" alt="">
                         </div>
                         <div class="product-body">
-                            <p class="product-category">Category</p>
-                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                            <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                            <p class="product-category">${l.getCategory().getName()}</p>
+                            <h3 class="product-name"><a href="#">${l.getName()}</a></h3>
+                            <h4 class="product-price">${l.getPrice() - l.getPrice() * l.getDiscount()/100 } <del class="product-old-price">${l.getPrice()}</del></h4>
                         </div>
                     </div>
-
-                    <div class="product-widget">
-                        <div class="product-img">
-                            <img src="../img/product02.png" alt="">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-category">Category</p>
-                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                            <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                        </div>
-                    </div>
-
-                    <div class="product-widget">
-                        <div class="product-img">
-                            <img src="../img/product03.png" alt="">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-category">Category</p>
-                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                            <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
                 <!-- /aside Widget -->
             </div>
@@ -3241,8 +3220,8 @@ Table OF Contents
                         <label>
                             Sắp xếp:
                             <select class="input-select">
-                                <option value="0">Tăng dần</option>
-                                <option value="1">Giảm dần</option>
+                                <option value="0" name="upPrice">Tăng dần</option>
+                                <option value="1" name="downPrice">Giảm dần</option>
                             </select>
                         </label>
 

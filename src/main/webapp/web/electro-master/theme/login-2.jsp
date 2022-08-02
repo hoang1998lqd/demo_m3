@@ -226,6 +226,7 @@
                                 <div class="group">
                                     <label for="pass" class="label">Mật khẩu</label>
                                     <input id="pass" type="Password" name="Password" class="input" data-type="password" placeholder="Tạo mật khẩu">
+                                    <p style="color: red; font-size: 12px"> ${password}</p>
                                 </div>
                                 <div class="group">
                                     <label for="pass" class="label">Nhập lại mât khẩu</label>

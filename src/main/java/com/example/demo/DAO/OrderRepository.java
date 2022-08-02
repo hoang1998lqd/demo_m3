@@ -3,6 +3,7 @@ package com.example.demo.DAO;
 import com.example.demo.connection.connectMySQL;
 import com.example.demo.model.*;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.ProductService;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -142,6 +143,8 @@ public class OrderRepository {
                     int amount = item.getProduct().getAmount() - quantity;
                     Product product = item.getProduct();
                     product.setAmount(amount);
+                    ProductService productService = new ProductService();
+                    productService.update(product);
                     statement.executeUpdate();
                 }
             }
