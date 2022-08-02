@@ -120,12 +120,16 @@ public class OrderRepository {
     public void addOrder(Customer customer, Cart cart, String note){
         LocalDate date = LocalDate.now();
         Date date_order = Date.valueOf(date);
+        LocalDate localDate = LocalDate.now();
+        LocalDate dateNext = localDate.plusDays(2);
+        Date date_ship = Date.valueOf(dateNext);
+
         try{
             connection = connectMySQL.getConnection();
             statement = connection.prepareStatement(INSERT_ORDERS);
             statement.setInt(1,customer.getId());
             statement.setDate(2,date_order);
-            statement.setDate(3,date_order);
+            statement.setDate(3,date_ship);
             statement.setString(4,customer.getAddress());
             statement.setInt(5,0);
             statement.setString(6,note);
