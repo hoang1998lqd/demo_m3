@@ -20,11 +20,12 @@ public class CustomerRepository implements ICRUD<Customer> {
             "value(?,?,?,?,?,?)";
     private final String INSERT_CUSTOMER_ADMIN  =  "insert into customer(account, password, name, phone, email, address,role_id)" +
             "value(?,?,?,?,?,?,?)";
-    private final String UPDATE_CUSTOMER_BY_ID  = "update customer set password = ?, name = ?, phone = ?," +
+    private final String UPDATE_CUSTOMER_BY_ID  = "update customer set name = ?, phone = ?," +
             "email = ?, address = ? where id = ?";
     private final String SELECT_ACCOUNT =  "  select * from customer where account = ?";
     private final String SELECT_EMAIL =  "  select * from customer where email = ?";
     private final String SELECT_PHONE =  "  select * from customer where phone = ?";
+    private final String UPDATE_PASSWORD = "update customer set password = ? where id = ?";
 
     Connection connection = null;
     PreparedStatement statement = null;
@@ -90,13 +91,19 @@ public class CustomerRepository implements ICRUD<Customer> {
     public void update(Customer customer) throws SQLException {
         connection = mySQL.getConnection();
         statement = connection.prepareStatement(UPDATE_CUSTOMER_BY_ID);
-//        "update customer set password = ?, name = ?, phone = ?," + "email = ?, address = ? where id = ?";
+        statement.setString(1,customer.getName());
+        statement.setString(2,customer.getPhone());
+        statement.setString(3,customer.getEmail());
+        statement.setString(4,customer.getAddress());
+        statement.setInt(5,customer.getId());
+        statement.executeUpdate();
+    }
+
+    public void updatePassword(Customer customer) throws SQLException {
+        connection = mySQL.getConnection();
+        statement = connection.prepareStatement(UPDATE_PASSWORD);
         statement.setString(1,customer.getPassword());
-        statement.setString(2,customer.getName());
-        statement.setString(3,customer.getPhone());
-        statement.setString(4,customer.getEmail());
-        statement.setString(5,customer.getAddress());
-        statement.setInt(6,customer.getId());
+        statement.setInt(2,customer.getId());
         statement.executeUpdate();
     }
 

@@ -29,6 +29,8 @@ public class ProductRepository {
             "and product.brand_id = ?";
     private final String SELECT_TOP3_PRODUCT_BUY = "select product_id from product_buy order by tong desc limit 3";
 
+    private final String SELECT_SEARCH = "select * from product where name like ?";
+
 
     private Product getProduct(int id, ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
@@ -74,6 +76,24 @@ public class ProductRepository {
 
         }catch (SQLException e){
             System.err.println(e.getMessage());
+        }
+        return products;
+    }
+
+    // Tìm kiếm gần đúng
+    public ArrayList<Product>searchProduct(String search){
+        ArrayList<Product> products = new ArrayList<>();
+        try{
+            connection = connectMySQL.getConnection();
+            statement = connection.prepareStatement(SELECT_SEARCH);
+            statement.setString(1,"%" + search + "%");
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                int idProduct = resultSet.getInt("id");
+                products.add(findById(idProduct));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return products;
     }

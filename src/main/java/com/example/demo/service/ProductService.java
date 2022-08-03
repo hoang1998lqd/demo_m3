@@ -51,8 +51,11 @@ public class ProductService implements ICRUD<Product> {
 
     public static void main(String[] args) {
         ProductService productService = new ProductService();
-        ArrayList<Product> products = productService.findProductByBrand(3);
+        ArrayList<Product> products = productService.productSearch("gaming");
         System.out.println(products.size());
+    }
+    public ArrayList<Product> productSearch(String search){
+        return productRepository.searchProduct(search);
     }
 
 

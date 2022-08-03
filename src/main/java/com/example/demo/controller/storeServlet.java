@@ -30,6 +30,12 @@ public class storeServlet extends HttpServlet {
         displayAllProduct(req,resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html;charset=UTF-8");
+        productSearch(req,resp);
+    }
+
     private void displayAllProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<Product>  products = productService.findAll();
         ArrayList<Brand>  brands = brandService.findAll();
@@ -43,19 +49,19 @@ public class storeServlet extends HttpServlet {
 
     }
 
-    private ArrayList<Product> getProductByCategory(int id){
-        ArrayList<Product> products ;
-        // Duyệt database gốc và tìm theo id category. Video phần 2
-//        class : active HTML sẽ giúp tích vào chân đỏ trang mình chọn
-        products = productService.findProductByCategory(id);
-
-        return products;
+    private void productSearch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String search = req.getParameter("searchProduct");
+        ArrayList<Product>  products = productService.productSearch(search);
+        ArrayList<Brand>  brands = brandService.findAll();
+        ArrayList<Category>  categories = categoryService.findAll();
+        ArrayList<Product>  listTop = productService.findProductTop();
+        req.setAttribute("categories",categories);
+        req.setAttribute("products",products);
+        req.setAttribute("brands",brands);
+        req.setAttribute("listTop",listTop);
+        req.getRequestDispatcher("/web/electro-master/theme/store.jsp").forward(req,resp);
     }
 
-    private ArrayList<Product> getProductByBrand(int id){
-        ArrayList<Product> products = productService.findProductByBrand(id);
-        return products;
-    }
 
 }
 

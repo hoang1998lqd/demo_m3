@@ -80,6 +80,10 @@ public class CustomerService implements ICRUD<Customer> {
         return 0;
     }
 
+    public void updatePassword(Customer customer) throws SQLException {
+        repository.updatePassword(customer);
+    }
+
     // Check password có ký tự là số
     public boolean checkPassword(String pass, ArrayList<Customer> customers){
         String regex = "^\\d{6,8}$";

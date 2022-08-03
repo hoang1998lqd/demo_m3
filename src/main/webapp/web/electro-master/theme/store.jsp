@@ -2996,7 +2996,7 @@ Table OF Contents
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
+                        <form action="/web/electro-master/theme/store" method="post">
                             <label>
                                 <select class="input-select">
                                     <option value="0">Danh mục</option>
@@ -3006,8 +3006,8 @@ Table OF Contents
                                     <option value="2">Phụ kiện</option>
                                 </select>
                             </label>
-                                <input class="input" placeholder="Tìm kiếm">
-                            <button class="search-btn">Search</button>
+                                <input class="input" name="searchProduct" placeholder="Tìm kiếm">
+                            <button class="search-btn" type="submit" name="btnSearch">Search</button>
                         </form>
                     </div>
                 </div>
@@ -3043,7 +3043,7 @@ Table OF Contents
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">${item.getProduct().getName()}</a></h3>
-                                            <h4 class="product-price"><span class="qty">${item.getQuantity()}x</span>${item.getProduct().getPrice()}</h4>
+                                            <h4 class="product-price"><span class="qty">${item.getQuantity()}x</span>${(item.getProduct().getPrice() - item.getProduct().getPrice() * item.getProduct().getDiscount()/100 )}</h4>
                                         </div>
                                         <form action="/web/electro-master/theme/item?Pid=${item.getProduct().getId()}" method="post">
                                         <button class="delete" name="id" value ="${item.getProduct().getId()}"><i class="fa fa-close" ></i></button>
@@ -3262,8 +3262,17 @@ Table OF Contents
                                 </div>
                                 <div class="product-body">
                                     <p class="product-category">${p.getCategory().getName()}</p>
-                                    <h3 class="product-name"><a href="cart/product?Pid=${p.getId()}">${p.getName()}</a></h3>
-                                    <h4 class="product-price">${p.getPrice() - p.getPrice() * p.getDiscount()/100 } <del class="product-old-price">${p.getPrice()}</del></h4>
+                                    <h3 class="product-name">
+                                        <a href="/web/electro-master/theme/products?Pid=${p.getId()}">${p.getName()}</a>
+                                    </h3>
+                                    <c:if test="${!product.getAmount().equal(0)}">
+                                        <h6 class="product-name">Còn hàng</h6>
+                                    </c:if>
+                                    <c:if test="${product.getAmount().equal(0)}">
+                                        <h4 class="product-name">Tạm thời hết hàng</h4>
+                                    </c:if>
+
+                                    <h6 class="product-price">${p.getPrice() - p.getPrice() * p.getDiscount()/100 } <del class="product-old-price">${p.getPrice()}</del></h6>
                                 </div>
                                 <form action="/web/electro-master/theme/cart?Pid=${p.getId()}" method="post">
                                     <div class="add-to-cart">

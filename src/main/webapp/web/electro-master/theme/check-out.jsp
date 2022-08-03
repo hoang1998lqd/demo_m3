@@ -325,7 +325,7 @@
                         <c:forEach items="${cart.getItems()}" var="item">
                         <div class="order-col">
                             <div>${item.getProduct().getName()}</div>
-                            <div>${item.getProduct().getPrice() * item.getQuantity()}</div>
+                            <div>${(item.getProduct().getPrice() - item.getProduct().getPrice() * item.getProduct().getDiscount()/100 )* item.getQuantity()}</div>
                         </div>
                         </c:forEach>
                     </div>

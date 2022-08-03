@@ -70,7 +70,6 @@ public class ProductServlet extends HttpServlet {
         req.setAttribute("products",products);
         req.setAttribute("brands",brands);
         req.getRequestDispatcher("/web/electro-master/theme/index.jsp").forward(req,resp);
-
     }
 
 }
