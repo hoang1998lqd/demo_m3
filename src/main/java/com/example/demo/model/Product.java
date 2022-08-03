@@ -13,6 +13,7 @@ public class Product {
     private int discount;
     private Brand brand;
 
+
     public Product() {
     }
 

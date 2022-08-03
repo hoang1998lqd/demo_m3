@@ -183,12 +183,12 @@
         <div class="card">
             <div class="login-box" style="height: 800px; margin-left: 500px">
                 <div class="login-snip" style="height: 800px">
-                    <input id="tab-1" type="radio" name="tab" class="sign-in" <c:if test ="${isSingup == null}" >checked></c:if>><label for="tab-1" class="tab">Đăng Nhập</label>
-                    <input id="tab-2" type="radio" name="tab" class="sign-up" <c:if test ="${isSingup != null}" >checked></c:if>><label for="tab-2" class="tab">Đăng Ký</label>
+                    <input id="tab-1" type="radio" name="tab" class="sign-in" <c:if test ="${isSingup == null}" >checked</c:if>><label for="tab-1" class="tab">Đăng Nhập</label>
+                    <input id="tab-2" type="radio" name="tab" class="sign-up" <c:if test ="${isSingup != null}" >checked</c:if>><label for="tab-2" class="tab">Đăng Ký</label>
                     <div class="login-space">
-                        <c:if test="${messageSignIn != null}">
-                        <form action="<c:url value="/web/electro-master/theme/login?action=sign-in"/>" method="post" style=" display: none">
-                            </c:if>
+<%--                        <c:if test="${messageSignIn != null}">--%>
+<%--                        <form action="<c:url value="/web/electro-master/theme/login?action=sign-in"/>" method="post" style=" display: none">--%>
+<%--                            </c:if>--%>
                         <form action="<c:url value="/web/electro-master/theme/login?action=sign-in"/>" method="post">
                             <div class="login">
                                 <div class="group">

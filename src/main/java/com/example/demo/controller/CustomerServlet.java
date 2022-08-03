@@ -1,4 +1,4 @@
-package com.example.demo.connection;
+package com.example.demo.controller;
 
 import com.example.demo.model.Customer;
 import com.example.demo.service.CustomerService;

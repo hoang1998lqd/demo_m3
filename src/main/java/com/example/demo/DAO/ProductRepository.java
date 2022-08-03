@@ -4,6 +4,7 @@ import com.example.demo.connection.connectMySQL;
 import com.example.demo.model.Brand;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.model.ProductStatus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -209,6 +210,7 @@ public class ProductRepository {
         }
         return products;
     }
+
 
     public void create(Product product) {
         try {

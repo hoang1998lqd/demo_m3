@@ -47,6 +47,8 @@ public class CustomerService implements ICRUD<Customer> {
                 return 2;
             } else if (customer.getEmail().equals(tagName)) {
                 return 3;
+            } else if (customer.getPassword().equals(tagName)) {
+                return 4;
             }
         }
         return 0;
@@ -90,6 +92,15 @@ public class CustomerService implements ICRUD<Customer> {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(pass);
         return matcher.find();
+    }
+
+    public int checkPass(String pass, ArrayList<Customer> customers){
+        if(checkTagName(pass,customers)==4){
+            return 1;
+        } else if (checkPassword(pass,customers)) {
+            return 2;
+        }
+        return 0;
     }
 
     // Check Email

@@ -41,6 +41,13 @@ public class Order {
         this.note = note;
         this.total_price = total_price;
     }
+    public Order(int id, Date date_order, Date date_ship, String address, int status) {
+        this.id = id;
+        this.date_order = date_order;
+        this.date_ship = date_ship;
+        this.address = address;
+        this.status = status;
+    }
 
     // Không có: ID, và total_price có chức năng dùng để đẩy dữ liệu vào database
     public Order(Customer customer, Date date_order, Date date_ship,
